@@ -23,7 +23,7 @@ function PhotosPage() {
     const fetchImages = async () => {
       setLoading(true); // Set loading to true when the request starts
       try {
-        const response = await axios.get('http://localhost:5001/api/images');
+        const response = await axios.get('CYCLIC_URL/api/images');
         if (response.data && Array.isArray(response.data.images)) {
           setItems(response.data.images);
         } else {
