@@ -17,6 +17,10 @@ cloudinary.config({
   secure: true
 });
 
+app.get('/health', (req, res) => {
+    res.send('OK');
+  });  
+
 app.use(express.json());
 
 app.get('/api/images', async (req, res) => {
