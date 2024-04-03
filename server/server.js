@@ -1,7 +1,7 @@
 // server.js
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
-const PORT = process.env.PORT || 5001;
+const PORT =  5001;
 const express = require('express');
 const path = require('path');
 const app = express();

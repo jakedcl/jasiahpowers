@@ -22,12 +22,11 @@ export default function App() {
         <Route path="*" element={<NotFoundPage />} />
         {/* These are the values passed where it says <Outlet /> in Layout.jsx component *basically like children for router-dom*/}
         <Route path="/" element={<Layout />}>
-          <Route path='projects' element={<ProjectsPage />} />
-          <Route path='projects/:projectId' element={<ProjectPage />} />
+          <Route path='/projects' element={<ProjectsPage />} />
+          <Route path='/projects/:projectId' element={<ProjectPage />} />
           <Route path='/photos' element={<PhotosPage />}/>
           <Route path='/photos/:publicId' element={<PhotosPage />} />
           <Route path='/video' element={<VideoPage />} />
-          
         </Route>
       </Routes>
     </Router>

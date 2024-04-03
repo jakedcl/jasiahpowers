@@ -49,7 +49,7 @@ const projects = [
 
       ],
       photos: [
-        '/puma/1.jpg','/puma/2.jpg','/puma/3.jpg','/puma/4.jpg','/puma/5.jpg',
+        'projects/puma/1.jpg','projects/puma/2.jpg','projects/puma/3.jpg','projects/puma/4.jpg','projects/puma/5.jpg',
       ],
       videos: [
 

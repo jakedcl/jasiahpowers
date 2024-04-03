@@ -23,7 +23,7 @@ function PhotosPage() {
     const fetchImages = async () => {
       setLoading(true); // Set loading to true when the request starts
       try {
-        const response = await axios.get('CYCLIC_URL/api/images');
+        const response = await axios.get(`https://important-cloak-pig.cyclic.app/api/images`);
         if (response.data && Array.isArray(response.data.images)) {
           setItems(response.data.images);
         } else {
