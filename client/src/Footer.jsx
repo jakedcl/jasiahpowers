@@ -16,12 +16,13 @@ const Footer = () => {
         position: 'static',
         bottom: 0,
         width: '100%',
-        display: 'block',
+        height: '10vh',
+        display: 'inline-block',
         textAlign: 'center',
         flexDirection: 'column', // Stack items vertically
         alignItems: 'center', // Center items horizontally
-        justifyContent: 'center', // Center items vertically
         backgroundColor: 'transparent',
+        
       }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', }}>
         {Object.entries(socialMediaLinks).map(([name, url]) => (
@@ -32,7 +33,7 @@ const Footer = () => {
               alt={name}
               sx={{ 
                 width: { xs: '24px', sm: '24px', md: '24px', lg: '26px', xl: '28px' }, 
-                height: { xs: '24px', sm: '24px', md: '24px', lg: '26px', xl: '28px' },
+                height: { xs: '24px', sm: '24px',  },
               }}
             />
           </Link>

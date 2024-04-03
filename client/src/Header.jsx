@@ -23,7 +23,7 @@ export default function Header() {
                         width: '100%',
                         color: 'black',
                         }}>
-                    <Button color="inherit" onClick={() => navigate('/home')}
+                    <Button color="inherit" onClick={() => navigate('/')}
                         className=""
                         sx={{...mainButtonStyle}}>
                         HOME
