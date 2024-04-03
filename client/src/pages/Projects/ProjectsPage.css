@@ -21,6 +21,5 @@
     background-color: rgb(224, 163, 66);
     &:hover {
         color: black;
-        background-color: 'red';
     }
 }

@@ -14,9 +14,10 @@ export default function HomePage() {
     {/* HOME PAGE */}
     return (
         <div>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}> {/* Adjust this div */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 0 auto' }}> {/* HEADER and content */}
                 {/* HEADER */}
-                <AppBar position="static" color="transparent" elevation={0} sx={{ height: '10vh', width: '100%', mt:'2vh', ml: '1vh'}}>
+                <AppBar position="static" color="transparent" elevation={0} sx={{ height: { xs: '12vh', sm: '12vh', md: '10vh', lg: '0vh' } ,width: '100%', mt:'2vh', }}>
                     <Toolbar>
                         <Box
                             sx={{
@@ -87,30 +88,29 @@ export default function HomePage() {
                         {/* YouTube Video Containerbox */}
                         <Box
                             sx={{
-                                position: 'sticky', // Needed to position the iframe absolutely inside
+                                position: 'relative',
                                 width: '100%', // Full width of the parent container
-                                paddingTop: '56.25%', // Top padding to create the aspect ratio
+                                paddingTop: '56.25%', // Aspect ratio of 16:9
                                 height: 0, // Set height to 0 to let padding control the height
                                 overflow: 'hidden', // Ensures no content can overflow
-                                display: 'block',
-                                '& > iframe': {
-                                    position: 'absolute', // Absolute position for the iframe
-                                    top: 0,
-                                    left: 0,
-                                    width: '100%', // Full width of the container
-                                    height: '100%', // Full height of the container
-                                    maxHeight: '60vh',
+                                '& iframe': {
+                                position: 'absolute',
+                                bottom: 0,
+                                right: 0,
+                                width: '100%', // Full width of the container
+                                height: '100%', // Full height of the container
                                 },
                             }}
-                        >
+                            >
                             <iframe
-                                src="https://www.youtube.com/embed/nRStNn8KVcA?si=q0ojzw887pfUMsFL"
+                                src="https://www.youtube.com/embed/nRStNn8KVcA?rel=0"
                                 title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
-                            ></iframe>
-                        </Box>
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                            </Box>
+
                         {/* Menu Container */}
                         <Box
                             sx={{
@@ -162,6 +162,7 @@ export default function HomePage() {
                     </Box>
                 </Container>
             </Box>
+            </div>
             <Footer />
         </div>
     );
