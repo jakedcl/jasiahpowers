@@ -1,0 +1,6 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/jacobdcl/server.git
+[submodule "public_html"]
+	path = public_html
+	url = https://github.com/jacobdcl/public_html.git
