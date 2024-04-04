@@ -15,6 +15,7 @@ export const mainButtonStyle = {
   px: '1.2vh',
   py: '.5vh',
   my: '.5vh',
+  boxShadow: '0px 0px 4px 2px rgba(155, 157, 157, .35)',
   '&:hover' : {
     backgroundColor: 'rgb(229, 213, 213)',
     color: 'black',

@@ -5,6 +5,26 @@ html, body, #root {
   width: 100%; /* This ensures the #root element takes up the full width */
 }
 
+body {
+  background-image: url(/background.jpg);
+  background-size: contain;
+  text-align: center;
+}
+
+/* for small screens */
+@media (max-width: 768px) {
+  body {
+    background-size: contain;
+  }
+}
+
+/* for medium screens */
+@media (min-width: 850px) and (max-width: 1024px) {
+  body {
+    background-size: cover;
+  }
+}
+
 * {
 
   margin: 1px;
