@@ -68,8 +68,9 @@ function PhotosPage() {
   };
 
   return (
+    <div>
     <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', paddingBottom: '5vh', textAlign: 'center' }}>
-      <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={0.6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'rgba(55,55,55,.3)', borderRadius: '10px'}}>
+      <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={0.6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', boxShadow: '0 0 30px .2px black', borderRadius: '10px'}}>
       {items.map((imagePublicId, index) => (
         <LazyLoad key={index} height={200} offset={100}>
           <Box
@@ -88,7 +89,7 @@ function PhotosPage() {
               publicId={imagePublicId} 
               crop="scale"
 
-              style={{ width: '97%', marginRight: '1vh', marginBottom: '1vh', borderRadius: '10px'}}
+              style={{ width: '97%', marginRight: '1vh', marginBottom: '1vh', borderRadius: '10px',}}
             />
           </Box>
         </LazyLoad>
@@ -123,6 +124,7 @@ function PhotosPage() {
           <Box sx={{ position: 'fixed', bottom: 0, px: '2vh', maxWidth: '80%', borderRadius: '.8rem', boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.9)', backgroundColor: 'rgba(155,155,155,.6)', margin: '2vh', fontSize: '.8rem', fontWeight:'800'}}>HOLD PHOTO TO FOCUS</Box>
         )}
     </Container>
+    </div>
   );
 }
 

@@ -35,6 +35,7 @@ function ProjectPage() {
   };
 
   return (
+    <div style={{backgroundColor: 'white'}}>
     <Container maxWidth="lg" sx={{ paddingTop: 10, paddingBottom: 2, textAlign: 'center', color: 'black', }}>
       <Typography sx={{...titleStyle, marginTop: '5vh', fontWeight: '900'}}>{project.name}</Typography>
       <Typography sx={{px: "10vw"}}>{project.description}<br/><br/></Typography>
@@ -82,6 +83,7 @@ function ProjectPage() {
         />
       </Modal>
     </Container>
+    </div>
   );
 }
 
