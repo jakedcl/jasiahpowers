@@ -1,14 +1,14 @@
-// NotFoundPage.jsx
+// ComingSoonPage.jsx
 import React from "react";
 import { Container, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { mainButtonStyle } from "../../pagetheme";
 
-function NotFoundPage() {
+function ComingSoonPage() {
   const navigate = useNavigate();
 
   const goHome = () => {
-    navigate("/");
+    navigate("/"); // assuming the root of your app is the home page
   };
 
   return (
@@ -27,13 +27,10 @@ function NotFoundPage() {
       }}
     >
       <Typography variant="h2" component="h1" gutterBottom>
-        404
+        Coming Soon
       </Typography>
-      <Typography>This page doesn't exist (yet).</Typography>
-      <Typography sx={{ paddingTop: "3vh" }}>
-        Maybe you made a typo or the page is old news.
-      </Typography>
-      <Typography sx={{ padding: "3vh" }}>Peace!</Typography>
+      <Typography>Loading... Stay Tuned!</Typography>
+      <Typography sx={{ padding: "5vh" }}></Typography>
       <Button
         variant="contained"
         sx={{
@@ -48,4 +45,4 @@ function NotFoundPage() {
   );
 }
 
-export default NotFoundPage;
+export default ComingSoonPage;
