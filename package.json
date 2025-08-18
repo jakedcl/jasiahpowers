@@ -1,0 +1,18 @@
+{
+  "name": "jasiahpowers-portfolio",
+  "version": "1.0.0",
+  "description": "Jasiah Powers Portfolio with Sanity CMS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd client && npm run preview",
+    "install-all": "npm install && cd client && npm install && cd ../studio && npm install"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.0.0"
+  },
+  "keywords": ["portfolio", "react", "sanity", "vercel"],
+  "author": "Jasiah Powers",
+  "license": "ISC"
+}

@@ -1,6 +1,6 @@
 //Footer.jsx
-import React from 'react';
-import { Box, Typography, Link } from '@mui/material';
+import React from "react";
+import { Box, Typography, Link } from "@mui/material";
 
 const socialMediaLinks = {
   Instagram: "https://www.instagram.com/jasiahpowers",
@@ -11,29 +11,42 @@ const socialMediaLinks = {
 
 const Footer = () => {
   return (
-    <Box 
+    <Box
       sx={{
-        position: 'static',
+        position: "static",
         bottom: 0,
-        width: '100%',
-        height: '10vh',
-        display: 'inline-block',
-        textAlign: 'center',
-        flexDirection: 'column', // Stack items vertically
-        alignItems: 'center', // Center items horizontally
-        backgroundColor: 'transparent',
-        
-      }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', }}>
+        width: "100%",
+        height: "10vh",
+        marginTop: "60px",
+        display: "inline-block",
+        textAlign: "center",
+        flexDirection: "column", // Stack items vertically
+        alignItems: "center", // Center items horizontally
+        backgroundColor: "transparent",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(socialMediaLinks).map(([name, url]) => (
-          <Link key={name} href={url} target="_blank" rel="noopener noreferrer" sx={{ margin: '0 10px' }}>
+          <Link
+            key={name}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ margin: "0 10px" }}
+          >
             <Box
               component="img"
               src={`/social_logos/${name.toLowerCase()}_logo.svg`}
               alt={name}
-              sx={{ 
-                width: { xs: '24px', sm: '24px', md: '24px', lg: '26px', xl: '28px' }, 
-                height: { xs: '24px', sm: '24px',  },
+              sx={{
+                width: {
+                  xs: "24px",
+                  sm: "24px",
+                  md: "24px",
+                  lg: "26px",
+                  xl: "28px",
+                },
+                height: { xs: "24px", sm: "24px" },
               }}
             />
           </Link>
