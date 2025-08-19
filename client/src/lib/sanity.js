@@ -32,8 +32,7 @@ export const sanityFetch = async (query, params = {}) => {
 export const queries = {
   projects: '*[_type == "project"] | order(order asc, _createdAt desc)',
   projectBySlug: '*[_type == "project" && slug.current == $slug][0]',
-  photos: '*[_type == "photo"] | order(order asc, _createdAt desc)',
-  videos: '*[_type == "video"] | order(order asc, _createdAt desc)',
+  photoGallery: '*[_type == "photoGallery"][0]',
   siteSettings: '*[_type == "siteSettings"][0]',
   homePage: '*[_type == "homePage"][0]',
 }

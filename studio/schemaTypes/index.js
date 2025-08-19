@@ -1,14 +1,14 @@
 import project from './project'
-import photo from './photo'
+import photoGallery from './photo'
 import siteSettings from './siteSettings'
 import homePage from './homePage'
 
 export const schemaTypes = [
   // Documents
   project,
-  photo,
   
   // Singletons
+  photoGallery,
   siteSettings,
   homePage,
 ]
