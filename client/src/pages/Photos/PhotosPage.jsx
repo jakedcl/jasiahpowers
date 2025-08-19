@@ -108,7 +108,7 @@ function PhotosPage() {
               >
                 <img
                   src={urlFor(photo.image).width(400).url()}
-                  alt={photo.image?.alt || photo.title || "Photo"}
+                  alt={photo.alt || photo.caption || "Photo"}
                   style={{
                     width: "97%",
                     marginRight: "1vh",
@@ -139,7 +139,7 @@ function PhotosPage() {
             {selectedItem && (
               <img
                 src={urlFor(selectedItem.image).url()}
-                alt={selectedItem.image?.alt || selectedItem.title || "Selected photo"}
+                alt={selectedItem.alt || selectedItem.caption || "Selected photo"}
                 style={{
                   maxWidth: "90vw",
                   maxHeight: "90vh",
