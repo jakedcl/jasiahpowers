@@ -1,18 +1,31 @@
 {
   "name": "jasiahpowers-portfolio",
-  "version": "1.0.0",
-  "description": "Jasiah Powers Portfolio with Sanity CMS",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Jasiah Powers portfolio — Next.js + Sanity CMS",
   "scripts": {
-    "dev": "cd client && npm run dev",
-    "build": "cd client && npm run build",
-    "start": "cd client && npm run preview",
-    "install-all": "npm install && cd client && npm install && cd ../studio && npm install"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "install-all": "npm install && cd studio && npm install"
   },
   "dependencies": {
-    "@sanity/client": "^6.0.0"
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/lab": "^5.0.0-alpha.166",
+    "@mui/material": "^5.15.7",
+    "@mui/material-nextjs": "^5.15.11",
+    "@sanity/client": "^6.0.0",
+    "@sanity/image-url": "^1.0.2",
+    "next": "^14.2.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
-  "keywords": ["portfolio", "react", "sanity", "vercel"],
-  "author": "Jasiah Powers",
-  "license": "ISC"
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.18"
+  }
 }

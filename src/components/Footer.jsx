@@ -1,0 +1,56 @@
+'use client'
+
+import { Box, Typography, Link } from '@mui/material'
+
+const socialMediaLinks = {
+  Instagram: 'https://www.instagram.com/jasiahpowers',
+  Twitter: 'https://www.twitter.com',
+  YouTube: 'https://www.youtube.com',
+  TikTok: 'https://www.tiktok.com',
+}
+
+export default function Footer() {
+  const year = new Date().getFullYear()
+
+  return (
+    <Box
+      sx={{
+        position: 'static',
+        bottom: 0,
+        width: '100%',
+        height: '10vh',
+        marginTop: '60px',
+        display: 'inline-block',
+        textAlign: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+      }}
+    >
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        {Object.entries(socialMediaLinks).map(([name, url]) => (
+          <Link
+            key={name}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ margin: '0 10px' }}
+          >
+            <Box
+              component="img"
+              src={`/social_logos/${name.toLowerCase()}_logo.svg`}
+              alt={name}
+              sx={{
+                width: { xs: '24px', sm: '24px', md: '24px', lg: '26px', xl: '28px' },
+                height: { xs: '24px', sm: '24px' },
+              }}
+            />
+          </Link>
+        ))}
+      </Box>
+      <Typography variant="body2" color="text.primary">
+        © JASIAH POWERS {year}
+      </Typography>
+    </Box>
+  )
+}

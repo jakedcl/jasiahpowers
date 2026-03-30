@@ -1,0 +1,12 @@
+import { sanityFetch } from '@/lib/sanity'
+import { photoGalleryQuery } from '@/lib/queries'
+import PhotosGallery from '@/components/photos/PhotosGallery'
+
+export const revalidate = 60
+
+export default async function PhotosPage() {
+  const photoGallery = await sanityFetch(photoGalleryQuery)
+  const photos = photoGallery?.photos || []
+
+  return <PhotosGallery photos={photos} />
+}
