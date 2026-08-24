@@ -80,7 +80,7 @@ export default defineType({
       title: 'Music Link',
       type: 'url',
       description: 'Link to music (Apple Music, Spotify, etc.)',
-      initialValue: 'https://music.apple.com/us/album/cc4ever/1743533951',
+      initialValue: 'https://music.apple.com/us/artist/steez%C3%B6/1850778759',
     }),
   ],
   preview: {
