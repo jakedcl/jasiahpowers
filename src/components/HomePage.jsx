@@ -42,7 +42,7 @@ export default function HomePage() {
                 <Button
                   onClick={() =>
                     window.open(
-                      'https://music.apple.com/us/album/cc4ever/1743533951',
+                      'https://music.apple.com/us/artist/steez%C3%B6/1850778759',
                       '_blank'
                     )
                   }
