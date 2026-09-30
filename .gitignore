@@ -55,3 +55,5 @@ jasiahpowers.server/
 # Temp files
 *.tmp
 *.temp
+# macOS
+.DS_Store
