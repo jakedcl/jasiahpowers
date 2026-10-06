@@ -8,7 +8,9 @@ export default function NotFound() {
       <p>Maybe you made a typo or the page is old news.</p>
       <p>Peace!</p>
       <p>
-        <Link href="/">Go to the Homepage</Link>
+        <Link className="send" href="/">
+          Go to the Homepage
+        </Link>
       </p>
     </div>
   )

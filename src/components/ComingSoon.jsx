@@ -7,7 +7,9 @@ export default function ComingSoon() {
       <h1>Coming Soon</h1>
       <p>Loading... Stay Tuned!</p>
       <p>
-        <Link href="/">Go to the Homepage</Link>
+        <Link className="send" href="/">
+          Go to the Homepage
+        </Link>
       </p>
     </div>
   )

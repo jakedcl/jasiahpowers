@@ -19,7 +19,7 @@ export default function Footer({ social }) {
           </li>
         ))}
       </ul>
-      <p>© JASIAH POWERS {year}</p>
+      <p>© Jasiah Powers {year}</p>
     </footer>
   )
 }
