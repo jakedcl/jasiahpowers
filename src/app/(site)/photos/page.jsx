@@ -4,9 +4,18 @@ import PhotosGallery from '@/components/photos/PhotosGallery'
 
 export const revalidate = 60
 
+export const metadata = {
+  title: 'Photos',
+}
+
 export default async function PhotosPage() {
   const photoGallery = await sanityFetch(photoGalleryQuery)
   const photos = photoGallery?.photos || []
 
-  return <PhotosGallery photos={photos} />
+  return (
+    <PhotosGallery
+      photos={photos}
+      description={photoGallery?.description}
+    />
+  )
 }

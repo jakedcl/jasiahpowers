@@ -11,13 +11,6 @@
     "install-all": "npm install && cd studio && npm install"
   },
   "dependencies": {
-    "@emotion/cache": "^11.11.0",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.11",
-    "@mui/lab": "^5.0.0-alpha.166",
-    "@mui/material": "^5.15.7",
-    "@mui/material-nextjs": "^5.15.11",
     "@sanity/client": "^6.0.0",
     "@sanity/image-url": "^1.0.2",
     "next": "^14.2.18",
