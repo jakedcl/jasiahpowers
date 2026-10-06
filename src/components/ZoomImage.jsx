@@ -46,14 +46,18 @@ export default function ZoomImage({
         </button>
         <figure>
           {opened ? (
-            <Image
-              src={fullSrc || src}
-              alt=""
-              width={width}
-              height={height}
-              sizes="92vw"
-              className="lightbox__img"
-            />
+            <div
+              className="lightbox__frame"
+              style={{ '--lw': width, '--lh': height }}
+            >
+              <Image
+                src={fullSrc || src}
+                alt=""
+                fill
+                sizes="92vw"
+                className="lightbox__img"
+              />
+            </div>
           ) : null}
           {caption ? <figcaption>{caption}</figcaption> : null}
         </figure>
