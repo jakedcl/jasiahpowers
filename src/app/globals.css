@@ -27,23 +27,15 @@ body {
 }
 
 body {
-  background: #f4efe6;
+  background-color: #f4efe6;
+  background-image: url(/grain.png);
+  background-repeat: repeat;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.45;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: url(/texture.jpg) center / cover no-repeat;
-  opacity: 0.55;
-  pointer-events: none;
 }
 
 h1,
@@ -98,16 +90,26 @@ button {
 }
 
 .site-shell {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.home-collage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url(/texture.jpg) center / cover no-repeat;
+  pointer-events: none;
 }
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(244, 239, 230, 0.92);
+  background: #f4efe6;
   border-bottom: 1px solid var(--ink);
 }
 
@@ -188,7 +190,7 @@ button {
   padding-top: 18px;
   padding-bottom: 28px;
   border-top: 1px solid var(--ink);
-  background: rgba(244, 239, 230, 0.92);
+  background: #f4efe6;
 }
 
 .site-footer ul {
@@ -236,11 +238,23 @@ button {
 }
 
 .hero h1 {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.04em 0.1em 0.12em;
+  background: #f4efe6;
   font-family: var(--display);
   font-size: clamp(64px, 11vw, 132px);
   font-weight: 500;
   letter-spacing: -0.045em;
   line-height: 0.8;
+}
+
+.home .kicker,
+.home .welcome {
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 8px;
+  background: #f4efe6;
 }
 
 .welcome {
@@ -258,8 +272,7 @@ button {
 }
 
 .home-video .kicker {
-  margin: 0 0 12px;
-  padding-left: var(--gutter);
+  margin: 0 0 12px var(--gutter);
 }
 
 .video-frame {
@@ -414,6 +427,12 @@ code {
   padding-top: 28px;
 }
 
+.booking-form {
+  background: #fffef8;
+  border: 1px solid var(--ink);
+  padding: 6px 16px 20px;
+}
+
 .booking h1 {
   font-family: var(--display);
   font-size: clamp(56px, 8vw, 96px);
@@ -452,9 +471,9 @@ code {
   padding: 10px 12px;
   border: 1px solid var(--ink);
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.72);
+  background: #fff;
   font: inherit;
-  color: inherit;
+  color: #111111;
 }
 
 .send {

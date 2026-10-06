@@ -6,6 +6,7 @@ export default function HomePage({ title, videoId, welcomeMessage, projects }) {
 
   return (
     <div className="home">
+      <div className="home-collage" aria-hidden="true" />
       <div className="hero">
         <Image
           src="/logo-mark.png"
