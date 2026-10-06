@@ -1,19 +1,20 @@
 export const revalidate = 3600
 
+export const metadata = {
+  title: 'Video',
+}
+
 const DEFAULT_PLAYLIST_ID = 'PLNo5tM02yzAVMsvykDJfejRnaZ6Ut0eSQ'
 
 async function fetchPlaylistItems() {
   const apiKey = process.env.YOUTUBE_API_KEY
-  const playlistId =
-    process.env.YOUTUBE_PLAYLIST_ID || DEFAULT_PLAYLIST_ID
+  const playlistId = process.env.YOUTUBE_PLAYLIST_ID || DEFAULT_PLAYLIST_ID
 
   if (!apiKey) {
     return { error: 'missing_key', items: [] }
   }
 
-  const url = new URL(
-    'https://www.googleapis.com/youtube/v3/playlistItems'
-  )
+  const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
   url.searchParams.set('part', 'snippet')
   url.searchParams.set('maxResults', '25')
   url.searchParams.set('playlistId', playlistId)
@@ -33,18 +34,11 @@ export default async function VideoPage() {
 
   if (error === 'missing_key') {
     return (
-      <div
-        style={{
-          maxWidth: 640,
-          margin: '0 auto',
-          padding: '15vh 16px',
-          textAlign: 'center',
-        }}
-      >
+      <div className="plain-page">
+        <h1 className="kicker">Video</h1>
         <p>
-          Video playlist is not configured. Set{' '}
-          <code>YOUTUBE_API_KEY</code> (and optionally{' '}
-          <code>YOUTUBE_PLAYLIST_ID</code>) in the environment.
+          Video playlist is not configured. Set <code>YOUTUBE_API_KEY</code>{' '}
+          (and optionally <code>YOUTUBE_PLAYLIST_ID</code>) in the environment.
         </p>
       </div>
     )
@@ -52,66 +46,38 @@ export default async function VideoPage() {
 
   if (error === 'fetch_failed' || !items.length) {
     return (
-      <div
-        style={{
-          maxWidth: 640,
-          margin: '0 auto',
-          padding: '15vh 16px',
-          textAlign: 'center',
-        }}
-      >
+      <div className="plain-page">
+        <h1 className="kicker">Video</h1>
         <p>Could not load videos right now.</p>
       </div>
     )
   }
 
   return (
-    <div
-      style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        padding: '15vh 16px',
-        textAlign: 'center',
-      }}
-    >
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-          gap: 16,
-          justifyContent: 'center',
-        }}
-      >
-        {items.map((video, index) => (
-          <div
-            key={video?.snippet?.resourceId?.videoId || index}
-            style={{
-              border: '3px solid rgb(243,232,232)',
-              boxShadow: '0 0 11px 0 rgba(255, 157, 157, .35)',
-              borderRadius: 5,
-              backgroundColor: 'black',
-              position: 'relative',
-              width: '100%',
-              paddingBottom: '56.25%',
-              height: 0,
-            }}
-          >
-            <iframe
-              src={`https://www.youtube.com/embed/${video.snippet.resourceId.videoId}`}
-              title={video.snippet.title}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '99%',
-                height: '98%',
-                border: 0,
-              }}
-              allowFullScreen
-            />
-          </div>
-        ))}
+    <section className="video-page">
+      <h1 className="kicker">Video</h1>
+      <div className="gallery video-grid">
+        {items.map((video, index) => {
+          const videoId = video?.snippet?.resourceId?.videoId
+          const title = video?.snippet?.title || 'Video'
+          return (
+            <article
+              className="video-card"
+              key={videoId || index}
+            >
+              <div className="video-frame">
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title={title}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  allowFullScreen
+                />
+              </div>
+              <h2>{title}</h2>
+            </article>
+          )
+        })}
       </div>
-    </div>
+    </section>
   )
 }

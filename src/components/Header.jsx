@@ -1,49 +1,59 @@
 'use client'
 
+import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { AppBar, Toolbar, Box, Button } from '@mui/material'
-import { mainButtonStyle } from '@/pagetheme'
 
-export default function Header() {
+const NAV = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/photos', label: 'Photos' },
+  { href: '/prints', label: 'Prints' },
+  { href: '/video', label: 'Video' },
+  { href: '/contact', label: 'Contact' },
+]
+
+export default function Header({ title, musicLink }) {
   const pathname = usePathname()
-  const firstPathSegment = pathname.split('/')[1] || ''
 
   return (
-    <AppBar
-      position="fixed"
-      color="transparent"
-      elevation={0}
-      sx={{ height: '10vh', width: '100%', mt: '2vh', ml: '1vh' }}
-    >
-      <Toolbar>
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            color: 'black',
-          }}
-        >
-          <Button
-            color="inherit"
-            href="/"
-            sx={{ ...mainButtonStyle }}
-          >
-            HOME
-          </Button>
-          <Box sx={{ flexGrow: 1 }} />
-          {firstPathSegment ? (
-            <Button
-              color="inherit"
-              href={`/${firstPathSegment}`}
-              sx={{ ...mainButtonStyle }}
-            >
-              {firstPathSegment.toUpperCase()}
-            </Button>
-          ) : null}
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <header className="site-header">
+      <a className="skip" href="#content">
+        Skip to content
+      </a>
+      <div className="site-header__bar">
+        <Link href="/" className="wordmark">
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={72}
+            height={88}
+            className="wordmark__mark"
+          />
+          {title}
+        </Link>
+        <nav className="site-nav" aria-label="Primary">
+          <div className="site-nav__group">
+            {NAV.map((item) => {
+              const active =
+                pathname === item.href || pathname.startsWith(`${item.href}/`)
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+          </div>
+          <div className="site-nav__group">
+            <a href={musicLink} target="_blank" rel="noopener noreferrer">
+              Music
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
   )
 }
