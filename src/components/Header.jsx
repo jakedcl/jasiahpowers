@@ -1,17 +1,18 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { contactHref } from '@/lib/site'
 
 const NAV = [
   { href: '/projects', label: 'Projects' },
   { href: '/photos', label: 'Photos' },
   { href: '/prints', label: 'Prints' },
   { href: '/video', label: 'Video' },
+  { href: '/contact', label: 'Contact' },
 ]
 
-export default function Header({ title, email, musicLink }) {
+export default function Header({ title, musicLink }) {
   const pathname = usePathname()
 
   return (
@@ -21,6 +22,13 @@ export default function Header({ title, email, musicLink }) {
       </a>
       <div className="site-header__bar">
         <Link href="/" className="wordmark">
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={72}
+            height={88}
+            className="wordmark__mark"
+          />
           {title}
         </Link>
         <nav className="site-nav" aria-label="Primary">
@@ -43,7 +51,6 @@ export default function Header({ title, email, musicLink }) {
             <a href={musicLink} target="_blank" rel="noopener noreferrer">
               Music
             </a>
-            <a href={contactHref(email)}>Contact</a>
           </div>
         </nav>
       </div>

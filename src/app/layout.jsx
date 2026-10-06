@@ -3,7 +3,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
-import { FALLBACK_EMAIL, FALLBACK_MUSIC, socialLinks } from '@/lib/site'
+import { FALLBACK_MUSIC, socialLinks } from '@/lib/site'
 import './globals.css'
 
 const display = Bodoni_Moda({
@@ -51,14 +51,13 @@ export default async function RootLayout({ children }) {
   }
 
   const title = settings?.title || 'Jasiah Powers'
-  const email = settings?.contactEmail || FALLBACK_EMAIL
   const musicLink = settings?.musicLink || FALLBACK_MUSIC
 
   return (
     <html lang="en" className={display.variable}>
       <body>
         <div className="site-shell">
-          <Header title={title} email={email} musicLink={musicLink} />
+          <Header title={title} musicLink={musicLink} />
           <main id="content" className="site-main">
             {children}
           </main>

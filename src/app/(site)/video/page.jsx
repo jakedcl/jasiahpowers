@@ -56,7 +56,7 @@ export default async function VideoPage() {
   return (
     <section className="video-page">
       <h1 className="kicker">Video</h1>
-      <div className="video-grid">
+      <div className="gallery video-grid">
         {items.map((video, index) => {
           const videoId = video?.snippet?.resourceId?.videoId
           const title = video?.snippet?.title || 'Video'
@@ -69,6 +69,7 @@ export default async function VideoPage() {
                 <iframe
                   src={`https://www.youtube.com/embed/${videoId}`}
                   title={title}
+                  loading={index === 0 ? 'eager' : 'lazy'}
                   allowFullScreen
                 />
               </div>

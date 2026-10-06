@@ -6,11 +6,13 @@ import Image from 'next/image'
 export default function ZoomImage({
   src,
   fullSrc,
+  lqip,
   alt,
   width,
   height,
   caption,
   sizes,
+  priority = false,
 }) {
   const dialogRef = useRef(null)
   const [opened, setOpened] = useState(false)
@@ -24,14 +26,20 @@ export default function ZoomImage({
   return (
     <>
       <button type="button" className="zoom" onClick={open}>
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
-          style={{ width: '100%', height: 'auto' }}
-        />
+        <span
+          className="zoom__frame"
+          style={lqip ? { backgroundImage: `url(${lqip})` } : undefined}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            sizes={sizes}
+            priority={priority}
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </span>
       </button>
       <dialog
         ref={dialogRef}

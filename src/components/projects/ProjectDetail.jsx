@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ZoomImage from '@/components/ZoomImage'
-import { imageMeta, imageSrc } from '@/lib/image'
+import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function ProjectDetail({ project }) {
   if (!project) return null
@@ -18,18 +18,20 @@ export default function ProjectDetail({ project }) {
         <p className="detail__description">{description}</p>
       ) : null}
       {images.length ? (
-        <div className="detail__images">
+        <div className="gallery">
           {images.map((image, index) => {
             const meta = imageMeta(image)
             return (
               <ZoomImage
                 key={image._key || image.asset?._ref || index}
-                src={imageSrc(image, 1600)}
-                fullSrc={imageSrc(image, 2400)}
+                src={imageSrc(image, 1400)}
+                fullSrc={imageSrc(image, 2000)}
+                lqip={imageLqip(image)}
                 alt={image.alt || `Preview of ${project.name}`}
                 width={meta.width}
                 height={meta.height}
-                sizes="(max-width: 800px) 100vw, 760px"
+                sizes={gridSizes}
+                priority={index === 0}
               />
             )
           })}

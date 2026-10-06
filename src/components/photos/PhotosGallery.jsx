@@ -1,5 +1,5 @@
 import ZoomImage from '@/components/ZoomImage'
-import { imageMeta, imageSrc } from '@/lib/image'
+import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function PhotosGallery({ photos, description }) {
   const intro = description?.trim()
@@ -25,13 +25,15 @@ export default function PhotosGallery({ photos, description }) {
           return (
             <ZoomImage
               key={photo._key || index}
-              src={imageSrc(photo.image, 1200)}
-              fullSrc={imageSrc(photo.image, 2400)}
+              src={imageSrc(photo.image, 1400)}
+              fullSrc={imageSrc(photo.image, 2000)}
+              lqip={imageLqip(photo.image)}
               alt={alt}
               caption={photo.caption || ''}
               width={meta.width}
               height={meta.height}
-              sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
+              sizes={gridSizes}
+              priority={index === 0}
             />
           )
         })}
