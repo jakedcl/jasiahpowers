@@ -1,6 +1,8 @@
-import { createClient } from '@sanity/client'
-import { projectId, dataset } from '@/lib/sanity'
+import { Resend } from 'resend'
 import { BOOKING_TYPES } from '@/lib/booking'
+
+const DEFAULT_TO = 'jasiahsteez@gmail.com'
+const DEFAULT_FROM = 'onboarding@resend.dev'
 
 function clean(value, max) {
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max)
@@ -42,36 +44,39 @@ export async function POST(request) {
     return Response.json({ error: 'Check the form.', fields }, { status: 400 })
   }
 
-  const token = process.env.SANITY_API_WRITE_TOKEN
-  if (!token) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
     return Response.json(
-      { error: 'Booking inbox is not configured.', fallback: true },
+      { error: 'Booking email is not configured.', fallback: true },
       { status: 503 }
     )
   }
 
+  const lines = [`Name: ${name}`, `Email: ${email}`]
+  if (phone) lines.push(`Phone: ${phone}`)
+  lines.push(`Booking: ${projectType}`)
+  if (date) lines.push(`Date: ${date}`)
+  if (budget) lines.push(`Budget: ${budget}`)
+  lines.push('', details)
+
   try {
-    const writer = createClient({
-      projectId,
-      dataset,
-      apiVersion: '2023-05-03',
-      token,
-      useCdn: false,
+    const resend = new Resend(apiKey)
+    const { error } = await resend.emails.send({
+      from: process.env.BOOKING_FROM_EMAIL || DEFAULT_FROM,
+      to: process.env.BOOKING_TO_EMAIL || DEFAULT_TO,
+      replyTo: email,
+      subject: `Booking request: ${projectType} from ${name}`,
+      text: lines.join('\n'),
     })
-    await writer.create({
-      _type: 'bookingRequest',
-      name,
-      email,
-      phone: phone || undefined,
-      projectType,
-      date: date || undefined,
-      budget: budget || undefined,
-      details,
-      submittedAt: new Date().toISOString(),
-    })
+    if (error) {
+      return Response.json(
+        { error: 'Could not send the request.', fallback: true },
+        { status: 502 }
+      )
+    }
   } catch {
     return Response.json(
-      { error: 'Could not save the request.', fallback: true },
+      { error: 'Could not send the request.', fallback: true },
       { status: 502 }
     )
   }
