@@ -6,18 +6,21 @@ import { youtubeId } from '@/lib/site'
 export const revalidate = 60
 
 export default async function Page() {
-  const [home, projects, settings] = await Promise.all([
+  const [home, allProjects, settings] = await Promise.all([
     sanityFetch(homePageQuery),
     sanityFetch(projectsQuery),
     sanityFetch(siteSettingsQuery),
   ])
+
+  const picked = (home?.featuredProjects || []).filter((project) => project?._id)
+  const projects = picked.length ? picked : allProjects || []
 
   return (
     <HomePage
       title={settings?.title || 'Jasiah Powers'}
       videoId={youtubeId(home?.featuredVideo?.videoId)}
       welcomeMessage={home?.welcomeMessage || ''}
-      projects={projects || []}
+      projects={projects}
     />
   )
 }

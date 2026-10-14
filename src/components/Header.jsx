@@ -29,7 +29,7 @@ export default function Header({ title, musicLink }) {
             height={88}
             className="wordmark__mark"
           />
-          {title}
+          <span className="wordmark__text">{title}</span>
         </Link>
         <nav className="site-nav" aria-label="Primary">
           <div className="site-nav__group">

@@ -54,13 +54,6 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'featured',
-      title: 'Featured Project',
-      type: 'boolean',
-      description: 'Should this project be featured prominently?',
-      initialValue: false,
-    }),
-    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',

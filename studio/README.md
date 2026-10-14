@@ -1,3 +1,14 @@
+# Sanity Studio
+
+The same studio is embedded in the Next.js app at `/studio` (and `/admin` redirects there). This folder still runs on its own:
+
+```bash
+npm install
+npm run dev
+```
+
+`basePath` is `/studio`, so the standalone dev server serves the studio at `http://localhost:3333/studio`.
+
 # Sanity Clean Content Studio
 
 Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.

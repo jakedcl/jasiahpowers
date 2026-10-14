@@ -1,9 +1,4 @@
 import { Bodoni_Moda } from 'next/font/google'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import { sanityFetch } from '@/lib/sanity'
-import { siteSettingsQuery } from '@/lib/queries'
-import { FALLBACK_MUSIC, socialLinks } from '@/lib/site'
 import './globals.css'
 
 const display = Bodoni_Moda({
@@ -42,27 +37,14 @@ export const viewport = {
 
 export const revalidate = 60
 
-export default async function RootLayout({ children }) {
-  let settings = null
-  try {
-    settings = await sanityFetch(siteSettingsQuery)
-  } catch {
-    settings = null
-  }
+const introScript = `(function(){try{var path=location.pathname;if(path!=='/'&&path!=='')return;if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('jp-intro-seen'))return;document.documentElement.classList.add('intro-pending')}catch(e){}})()`
 
-  const title = settings?.title || 'Jasiah Powers'
-  const musicLink = settings?.musicLink || FALLBACK_MUSIC
-
+export default function RootLayout({ children }) {
   return (
     <html lang="en" className={display.variable}>
       <body>
-        <div className="site-shell">
-          <Header title={title} musicLink={musicLink} />
-          <main id="content" className="site-main">
-            {children}
-          </main>
-          <Footer social={socialLinks(settings)} />
-        </div>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+        {children}
       </body>
     </html>
   )
