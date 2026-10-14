@@ -2,23 +2,24 @@
 
 ## Stack
 
-- **Frontend**: Next.js 14 (App Router), React 18, MUI v5
-- **CMS**: Sanity Studio (`studio/`)
-- **Content API**: `@sanity/client` used from Next.js **server components** (no separate `/api` layer for projects/photos)
-- **Images**: Sanity CDN (`urlFor` / `cdn.sanity.io`)
+- **Frontend**: Next.js 14 (App Router), React 18
+- **CMS**: Sanity. The studio is embedded in the site at `/studio` (`/admin` redirects there). The `studio/` folder still runs on its own with `npm run dev`.
+- **Content API**: `@sanity/client` from Next.js server components
+- **Images**: Sanity CDN (`urlFor` / `cdn.sanity.io`), sized with `auto=format`
+- **Booking**: `POST /api/booking` sends mail with Resend
 - **Hosting**: Vercel
-- **Video page**: YouTube Data API — **server-side only** via `YOUTUBE_API_KEY` (not exposed to the browser)
+- **Video page**: YouTube Data API, server-side only
 
 ## Repository layout
 
 ```
 jasiahpowers/
-├── src/app/           # Next.js App Router pages & layouts
-├── src/components/    # UI (MUI + client islands)
+├── src/app/           # Next.js App Router. Site chrome is in (site)/
+├── src/app/studio/    # Embedded Sanity Studio
+├── src/components/
 ├── src/lib/           # Sanity client + queries
-├── public/            # Static assets (add logo.png, background.jpg here if missing)
-├── studio/            # Sanity Studio
-├── vercel.json
+├── public/
+├── studio/            # Standalone Studio (same schema and config)
 └── package.json
 ```
 
@@ -27,21 +28,25 @@ jasiahpowers/
 ```bash
 npm install
 npm run dev          # http://localhost:3000
+                     # Studio: http://localhost:3000/studio
 
-cd studio && npm install && npm run dev   # CMS — http://localhost:3333
+cd studio && npm install && npm run dev   # standalone Studio, base path /studio
 ```
 
-Copy `.env.example` to `.env.local` and set `YOUTUBE_API_KEY` if you need the video page locally.
+Copy `.env.example` to `.env.local`.
 
 ## Vercel
 
-- Framework preset: **Next.js** (root of repo).
-- Environment variables:
-  - `YOUTUBE_API_KEY` — required for `/video`
-  - Optional: `YOUTUBE_PLAYLIST_ID`, `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`
+Framework preset: **Next.js** (repo root).
 
-## Legacy note
+Environment variables:
 
-The old Vite app lived in `client/` and used `VITE_BACKEND_URL` plus Vercel serverless handlers in `api/`. That layer was removed in favor of direct Sanity reads from Next.js and a server-side YouTube fetch.
+- `RESEND_API_KEY` — server-only. Required for the booking form to send mail. Without it, the form falls back to email.
+- `BOOKING_TO_EMAIL` — optional. Defaults to `jasiahsteez@gmail.com`.
+- `BOOKING_FROM_EMAIL` — optional. Defaults to `onboarding@resend.dev` when unset. Production uses the verified sender.
+- `YOUTUBE_API_KEY` — server-only. Required for `/video`.
+- Optional: `YOUTUBE_PLAYLIST_ID`, `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`
 
-*Last updated: March 2026*
+Homepage featured work is the ordered `featuredProjects` list on the Homepage document in Studio. If that list is empty, the home page shows every project.
+
+*Last updated: October 2026*

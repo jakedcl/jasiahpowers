@@ -86,7 +86,7 @@ export default defineType({
     }),
     defineField({
       name: 'featuredProjects',
-      title: 'Featured Projects',
+      title: 'Featured work',
       type: 'array',
       of: [
         {
@@ -94,7 +94,7 @@ export default defineType({
           to: [{type: 'project'}],
         },
       ],
-      description: 'Select projects to feature on homepage (leave empty to show all)',
+      description: 'These projects show on the homepage in this order.',
     }),
     defineField({
       name: 'navigation',
