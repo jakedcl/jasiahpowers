@@ -46,8 +46,6 @@ export default function Header({ title, musicLink }) {
                 </Link>
               )
             })}
-          </div>
-          <div className="site-nav__group">
             <a href={musicLink} target="_blank" rel="noopener noreferrer">
               Music
             </a>

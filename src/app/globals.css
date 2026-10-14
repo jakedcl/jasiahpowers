@@ -152,10 +152,9 @@ button {
 
 .site-nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   align-items: baseline;
-  gap: 8px 32px;
 }
 
 .site-nav__group {
@@ -825,7 +824,6 @@ code {
 
   .site-nav {
     justify-content: flex-start;
-    gap: 10px 16px;
   }
 
   .site-nav a {
