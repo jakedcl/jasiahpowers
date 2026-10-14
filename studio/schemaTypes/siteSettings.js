@@ -1,92 +1,139 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
+function urlField(name, title, description, fieldset) {
+  return defineField({
+    name,
+    title,
+    type: 'url',
+    ...(fieldset ? {fieldset} : {}),
+    description,
+    validation: (Rule) =>
+      Rule.uri({scheme: ['http', 'https']}).error(
+        'Paste the full link, starting with https://'
+      ),
+  })
+}
+
+function playlistId(value) {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+  try {
+    const list = new URL(raw).searchParams.get('list')
+    if (list) return list
+  } catch {
+    /* a bare id */
+  }
+  return /^[\w-]{8,}$/.test(raw) ? raw : ''
+}
 
 export default defineType({
   name: 'siteSettings',
-  title: 'Site Settings',
+  title: 'Site settings',
   type: 'document',
+  fieldsets: [
+    {name: 'social', title: 'Social links'},
+    {name: 'booking', title: 'Contact and booking'},
+    {name: 'music', title: 'Music'},
+    {name: 'video', title: 'YouTube'},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
     defineField({
       name: 'title',
-      title: 'Site Title',
+      title: 'Site name',
       type: 'string',
+      description: 'The name in the header.',
       initialValue: 'Jasiah Powers',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'logo',
-      title: 'Logo',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alt Text',
-          initialValue: 'Jasiah Powers Logo',
-        },
-      ],
-    }),
-    defineField({
-      name: 'backgroundImage',
-      title: 'Background Image',
-      type: 'image',
-      description: 'Main site background image',
-      options: {
-        hotspot: true,
-      },
+      validation: (Rule) => Rule.required().error('The site needs a name.'),
     }),
     defineField({
       name: 'socialLinks',
-      title: 'Social Media Links',
+      title: 'Social links',
       type: 'object',
+      fieldset: 'social',
+      description: 'Leave a link empty to hide it on the site.',
       fields: [
-        {
-          name: 'instagram',
-          title: 'Instagram URL',
-          type: 'url',
-          initialValue: 'https://www.instagram.com/jasiahpowers',
-        },
-        {
-          name: 'twitter',
-          title: 'Twitter URL',
-          type: 'url',
-          initialValue: 'https://www.twitter.com',
-        },
-        {
-          name: 'youtube',
-          title: 'YouTube URL',
-          type: 'url',
-          initialValue: 'https://www.youtube.com',
-        },
-        {
-          name: 'tiktok',
-          title: 'TikTok URL',
-          type: 'url',
-          initialValue: 'https://www.tiktok.com',
-        },
+        urlField('instagram', 'Instagram', 'The Instagram profile link.'),
+        urlField('twitter', 'Twitter / X', 'The Twitter or X profile link.'),
+        urlField('youtube', 'YouTube', 'The YouTube channel link.'),
+        urlField('tiktok', 'TikTok', 'The TikTok profile link.'),
       ],
+    }),
+    urlField(
+      'musicLink',
+      'Music link',
+      'Where the Music item in the header goes. Apple Music, Spotify, or similar.',
+      'music'
+    ),
+    defineField({
+      name: 'youtubePlaylist',
+      title: 'YouTube playlist',
+      type: 'string',
+      fieldset: 'video',
+      description:
+        'The Video page uses this playlist. Paste the playlist link from YouTube, or just the ID.',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true
+          return playlistId(value)
+            ? true
+            : 'Paste a YouTube playlist link, or an ID like PL…'
+        }),
     }),
     defineField({
       name: 'contactEmail',
-      title: 'Contact Email',
+      title: 'Contact email',
       type: 'string',
-      initialValue: 'jasiahsteez@gmail.com',
-      validation: (Rule) => Rule.email(),
+      fieldset: 'booking',
+      description:
+        'Booking requests are emailed here. If this is empty, they go to the backup address on the server.',
+      validation: (Rule) =>
+        Rule.email().error('That doesn’t look like an email address.'),
     }),
     defineField({
-      name: 'musicLink',
-      title: 'Music Link',
-      type: 'url',
-      description: 'Link to music (Apple Music, Spotify, etc.)',
-      initialValue: 'https://music.apple.com/us/artist/steez%C3%B6/1850778759',
+      name: 'bookingTypes',
+      title: 'Booking types',
+      type: 'array',
+      fieldset: 'booking',
+      description:
+        'The choices on the contact form. Drag to reorder. Leave this empty to use the built-in list.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          validation: (Rule) => Rule.required().error('Add a name, or remove this row.'),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Site description',
+      type: 'text',
+      rows: 3,
+      fieldset: 'seo',
+      description: 'The short description Google and link previews use.',
+      validation: (Rule) =>
+        Rule.max(180).warning('Shorter descriptions fit better in a link preview.'),
+    }),
+    defineField({
+      name: 'shareImage',
+      title: 'Share image',
+      type: 'image',
+      fieldset: 'seo',
+      description: 'The picture people see when the site is shared. A wide photo works best.',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'A few words describing the picture.',
+        }),
+      ],
     }),
   ],
   preview: {
-    select: {
-      title: 'title',
-      media: 'logo',
+    prepare() {
+      return {title: 'Site settings'}
     },
   },
 })

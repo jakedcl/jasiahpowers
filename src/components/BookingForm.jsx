@@ -31,7 +31,7 @@ function mailtoFor(email, values) {
   return `${address}?subject=${subject}&body=${body}`
 }
 
-export default function BookingForm({ email }) {
+export default function BookingForm({ email, types = BOOKING_TYPES }) {
   const [values, setValues] = useState(EMPTY)
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
@@ -126,7 +126,7 @@ export default function BookingForm({ email }) {
           required
         >
           <option value="">Choose</option>
-          {BOOKING_TYPES.map((type) => (
+          {types.map((type) => (
             <option key={type} value={type}>
               {type}
             </option>

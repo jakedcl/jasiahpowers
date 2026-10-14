@@ -1,19 +1,39 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
+import {structure} from './structure'
+import {StudioIcon} from './icon'
+
+const SINGLETONS = new Set(['homePage', 'photoGallery', 'siteSettings'])
 
 export default defineConfig({
   name: 'default',
-  title: 'Jasiah Powers Portfolio',
+  title: 'Jasiah Powers',
+  icon: StudioIcon,
   basePath: '/studio',
 
   projectId: 'k4dm6cys',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool({structure})],
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    newDocumentOptions: (prev, {creationContext}) => {
+      if (creationContext.type === 'global') {
+        return prev.filter((item) => !SINGLETONS.has(item.templateId))
+      }
+      return prev
+    },
+    actions: (prev, {schemaType}) => {
+      if (!SINGLETONS.has(schemaType)) return prev
+      return prev.filter((action) => {
+        const name = action.action || action.name
+        return name !== 'delete' && name !== 'duplicate'
+      })
+    },
   },
 })

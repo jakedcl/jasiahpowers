@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import ZoomImage from '@/components/ZoomImage'
+import ProjectText from '@/components/projects/ProjectText'
 import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function ProjectDetail({ project }) {
   if (!project) return null
 
-  const description = project.description?.trim()
   const images = (project.images || []).filter(Boolean)
+  const summary = project.bio?.trim()
 
   return (
     <article className="detail">
@@ -14,9 +15,8 @@ export default function ProjectDetail({ project }) {
         <Link href="/projects">Projects</Link>
       </p>
       <h1>{project.name}</h1>
-      {description ? (
-        <p className="detail__description">{description}</p>
-      ) : null}
+      {summary ? <p className="detail__dek">{summary}</p> : null}
+      <ProjectText value={project.description} />
       {images.length ? (
         <div className="gallery">
           {images.map((image, index) => {

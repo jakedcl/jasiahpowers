@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 
 export default function ZoomImage({
@@ -15,17 +16,59 @@ export default function ZoomImage({
   priority = false,
 }) {
   const dialogRef = useRef(null)
-  const [opened, setOpened] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
-  const open = () => {
-    setOpened(true)
-    dialogRef.current?.showModal()
-  }
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!open || !dialog) return
+    if (!dialog.open) dialog.showModal()
+    const onClose = () => setOpen(false)
+    dialog.addEventListener('close', onClose)
+    return () => dialog.removeEventListener('close', onClose)
+  }, [open])
+
   const close = () => dialogRef.current?.close()
+
+  const dialog = (
+    <dialog
+      ref={dialogRef}
+      className="lightbox"
+      aria-label={alt || 'Expanded photo'}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) close()
+      }}
+    >
+      <button type="button" className="lightbox__close" onClick={close}>
+        Close
+      </button>
+      <figure
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div
+          className="lightbox__frame"
+          style={{ '--lw': width, '--lh': height }}
+        >
+          <Image
+            src={fullSrc || src}
+            alt=""
+            fill
+            sizes="92vw"
+            className="lightbox__img"
+          />
+        </div>
+        {caption ? <figcaption>{caption}</figcaption> : null}
+      </figure>
+    </dialog>
+  )
 
   return (
     <>
-      <button type="button" className="zoom" onClick={open}>
+      <button type="button" className="zoom" onClick={() => setOpen(true)}>
         <span
           className="zoom__frame"
           style={lqip ? { backgroundImage: `url(${lqip})` } : undefined}
@@ -41,35 +84,7 @@ export default function ZoomImage({
           />
         </span>
       </button>
-      <dialog
-        ref={dialogRef}
-        className="lightbox"
-        aria-label={alt || 'Expanded photo'}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) close()
-        }}
-      >
-        <button type="button" className="lightbox__close" onClick={close}>
-          Close
-        </button>
-        <figure>
-          {opened ? (
-            <div
-              className="lightbox__frame"
-              style={{ '--lw': width, '--lh': height }}
-            >
-              <Image
-                src={fullSrc || src}
-                alt=""
-                fill
-                sizes="92vw"
-                className="lightbox__img"
-              />
-            </div>
-          ) : null}
-          {caption ? <figcaption>{caption}</figcaption> : null}
-        </figure>
-      </dialog>
+      {mounted && open ? createPortal(dialog, document.body) : null}
     </>
   )
 }

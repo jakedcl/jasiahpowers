@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import Image from 'next/image'
 
 const SEEN = 'jp-intro-seen'
 const MOVE_MS = 800
@@ -131,13 +130,14 @@ export default function HomeIntro({ title }) {
 
   return (
     <div className="intro" ref={overlayRef} aria-hidden="true">
-      <Image
+      {/* Plain img so the portrait is in the first HTML, before the image optimizer. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         className="intro__logo"
         src="/logo-mark.png"
         alt=""
         width={640}
         height={786}
-        priority
       />
       <p className="intro__name">{title}</p>
     </div>

@@ -1,5 +1,7 @@
 import { Resend } from 'resend'
-import { BOOKING_TYPES } from '@/lib/booking'
+import { sanityFetch } from '@/lib/sanity'
+import { siteSettingsQuery } from '@/lib/queries'
+import { bookingTypes } from '@/lib/site'
 
 const DEFAULT_TO = 'jasiahsteez@gmail.com'
 const DEFAULT_FROM = 'onboarding@resend.dev'
@@ -32,7 +34,14 @@ export async function POST(request) {
   if (phone && !/^[0-9+().\-\s]{7,40}$/.test(phone)) {
     fields.phone = 'Check the phone number.'
   }
-  if (!BOOKING_TYPES.includes(projectType)) {
+  let settings = null
+  try {
+    settings = await sanityFetch(siteSettingsQuery)
+  } catch {
+    settings = null
+  }
+  const types = bookingTypes(settings)
+  if (!types.includes(projectType)) {
     fields.projectType = 'Choose a booking type.'
   }
   if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -63,7 +72,7 @@ export async function POST(request) {
     const resend = new Resend(apiKey)
     const { error } = await resend.emails.send({
       from: process.env.BOOKING_FROM_EMAIL || DEFAULT_FROM,
-      to: process.env.BOOKING_TO_EMAIL || DEFAULT_TO,
+      to: settings?.contactEmail || process.env.BOOKING_TO_EMAIL || DEFAULT_TO,
       replyTo: email,
       subject: `Booking request: ${projectType} from ${name}`,
       text: lines.join('\n'),
