@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { sanityFetch } from '@/lib/sanity'
 import { projectBySlugQuery } from '@/lib/queries'
 import ProjectDetail from '@/components/projects/ProjectDetail'
+import { plainText } from '@/lib/text'
 
 export const revalidate = 60
 
@@ -10,7 +11,7 @@ export async function generateMetadata({ params }) {
     slug: params.projectId,
   })
   if (!project?.name) return {}
-  const description = project.description?.trim()
+  const description = project.bio?.trim() || plainText(project.description)
   return {
     title: project.name,
     description: description || undefined,

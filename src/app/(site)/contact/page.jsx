@@ -1,7 +1,7 @@
 import BookingForm from '@/components/BookingForm'
 import { sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
-import { FALLBACK_EMAIL, contactHref } from '@/lib/site'
+import { FALLBACK_EMAIL, bookingTypes, contactHref } from '@/lib/site'
 
 export const metadata = {
   title: 'Contact',
@@ -26,7 +26,7 @@ export default async function ContactPage() {
           <a href={contactHref(email)}>{email}</a>
         </p>
       </div>
-      <BookingForm email={email} />
+      <BookingForm email={email} types={bookingTypes(settings)} />
     </div>
   )
 }

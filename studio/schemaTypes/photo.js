@@ -1,60 +1,48 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'photoGallery',
-  title: 'Photo Gallery',
+  title: 'Photos',
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Gallery Title',
-      type: 'string',
-      initialValue: 'Photo Gallery',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'description',
-      title: 'Gallery Description',
+      title: 'Intro line',
       type: 'text',
       rows: 3,
-      description: 'Optional description for the photo gallery',
+      description: 'Optional sentence under the Photos heading. Leave it blank to hide it.',
     }),
     defineField({
       name: 'photos',
       title: 'Photos',
       type: 'array',
+      description: 'Drag photos into the order they should appear on the site.',
       of: [
-        {
+        defineArrayMember({
           type: 'object',
           fields: [
-            {
+            defineField({
               name: 'image',
-              title: 'Image',
+              title: 'Photo',
               type: 'image',
-              options: {
-                hotspot: true,
-              },
-              validation: (Rule) => Rule.required(),
-            },
-            {
+              options: {hotspot: true},
+              validation: (Rule) => Rule.required().error('Choose a photo.'),
+            }),
+            defineField({
               name: 'alt',
-              title: 'Alt Text',
+              title: 'Alt text',
               type: 'string',
-              description: 'Alternative text for accessibility',
-            },
-            {
+              description:
+                'A few plain words describing the photo. Screen readers read this, and it shows if the picture is slow to load.',
+              validation: (Rule) =>
+                Rule.required().error('Add a few words describing this photo.'),
+            }),
+            defineField({
               name: 'caption',
               title: 'Caption',
               type: 'string',
-              description: 'Optional caption for this photo',
-            },
-            {
-              name: 'featured',
-              title: 'Featured',
-              type: 'boolean',
-              description: 'Highlight this photo?',
-              initialValue: false,
-            },
+              description: 'Optional. Shows under the photo when someone taps it.',
+            }),
           ],
           preview: {
             select: {
@@ -62,36 +50,22 @@ export default defineType({
               subtitle: 'alt',
               media: 'image',
             },
-            prepare(selection) {
-              const {title, subtitle, media} = selection;
+            prepare({title, subtitle, media}) {
               return {
-                title: title || 'Untitled Photo',
-                subtitle: subtitle || 'No alt text',
-                media: media,
-              };
+                title: title || subtitle || 'Photo',
+                subtitle: title ? subtitle : undefined,
+                media,
+              }
             },
           },
-        },
+        }),
       ],
-      options: {
-        layout: 'grid',
-      },
-      description: 'Drag and drop photos to reorder them. The order here determines the display order on your website.',
+      options: {layout: 'grid'},
     }),
   ],
   preview: {
-    select: {
-      title: 'title',
-      subtitle: 'description',
-      media: 'photos.0.image',
-    },
-    prepare(selection) {
-      const {title, subtitle, media} = selection;
-      return {
-        title: title || 'Photo Gallery',
-        subtitle: subtitle || 'Photo collection',
-        media: media,
-      };
+    prepare() {
+      return {title: 'Photos'}
     },
   },
 })

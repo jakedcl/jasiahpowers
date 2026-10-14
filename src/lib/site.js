@@ -1,3 +1,5 @@
+import { BOOKING_TYPES } from '@/lib/booking'
+
 export const FALLBACK_EMAIL = 'jasiahsteez@gmail.com'
 
 export const FALLBACK_MUSIC =
@@ -5,21 +7,53 @@ export const FALLBACK_MUSIC =
 
 export const FALLBACK_VIDEO_ID = 'nRStNn8KVcA'
 
+export const DEFAULT_PLAYLIST_ID = 'PLNo5tM02yzAVMsvykDJfejRnaZ6Ut0eSQ'
+
 export const FALLBACK_SOCIAL = {
   instagram: 'https://www.instagram.com/jasiahpowers',
-  twitter: 'https://www.twitter.com',
-  youtube: 'https://www.youtube.com',
-  tiktok: 'https://www.tiktok.com',
+}
+
+const HOMEPAGE_HOSTS = new Set([
+  'twitter.com',
+  'www.twitter.com',
+  'x.com',
+  'www.x.com',
+  'youtube.com',
+  'www.youtube.com',
+  'tiktok.com',
+  'www.tiktok.com',
+  'instagram.com',
+  'www.instagram.com',
+])
+
+export function usableLink(url) {
+  const raw = String(url || '').trim()
+  if (!raw) return ''
+  try {
+    const parsed = new URL(raw)
+    const path = parsed.pathname.replace(/\/+$/, '')
+    if (HOMEPAGE_HOSTS.has(parsed.hostname) && !path) return ''
+    return raw
+  } catch {
+    return ''
+  }
 }
 
 export function socialLinks(settings) {
   const fromCms = settings?.socialLinks || {}
   return {
-    instagram: fromCms.instagram || FALLBACK_SOCIAL.instagram,
-    twitter: fromCms.twitter || FALLBACK_SOCIAL.twitter,
-    youtube: fromCms.youtube || FALLBACK_SOCIAL.youtube,
-    tiktok: fromCms.tiktok || FALLBACK_SOCIAL.tiktok,
+    instagram: usableLink(fromCms.instagram) || FALLBACK_SOCIAL.instagram,
+    twitter: usableLink(fromCms.twitter),
+    youtube: usableLink(fromCms.youtube),
+    tiktok: usableLink(fromCms.tiktok),
   }
+}
+
+export function bookingTypes(settings) {
+  const fromCms = (settings?.bookingTypes || [])
+    .map((type) => String(type || '').trim())
+    .filter(Boolean)
+  return fromCms.length ? fromCms : BOOKING_TYPES
 }
 
 export function contactHref(email) {
@@ -27,7 +61,30 @@ export function contactHref(email) {
   return `mailto:${address}?subject=Contact from Website&body=Hi Jasiah,`
 }
 
+export function parseYoutubeId(value) {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+  const match = raw.match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/
+  )
+  if (match) return match[1]
+  if (/^[\w-]{6,}$/.test(raw)) return raw
+  return ''
+}
+
 export function youtubeId(value) {
-  const id = (value || '').trim()
-  return /^[\w-]{6,}$/.test(id) ? id : FALLBACK_VIDEO_ID
+  return parseYoutubeId(value) || FALLBACK_VIDEO_ID
+}
+
+export function playlistId(value) {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+  try {
+    const list = new URL(raw).searchParams.get('list')
+    if (list && /^[\w-]{8,}$/.test(list)) return list
+  } catch {
+    /* a bare id */
+  }
+  if (/^[\w-]{8,}$/.test(raw)) return raw
+  return ''
 }

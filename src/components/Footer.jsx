@@ -11,7 +11,7 @@ export default function Footer({ social }) {
   return (
     <footer className="site-footer">
       <ul>
-        {SOCIAL.map(([key, label]) => (
+        {SOCIAL.filter(([key]) => social?.[key]).map(([key, label]) => (
           <li key={key}>
             <a href={social[key]} target="_blank" rel="noopener noreferrer">
               {label}

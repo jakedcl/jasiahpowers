@@ -30,7 +30,12 @@ export default function ProjectTiles({ projects, priorityFirst = false }) {
             ) : (
               <span className="tile__fallback" />
             )}
-            <span className="tile__name">{project.name}</span>
+            <span className="tile__copy">
+              <span className="tile__name">{project.name}</span>
+              {project.bio ? (
+                <span className="tile__bio">{project.bio}</span>
+              ) : null}
+            </span>
           </Link>
         )
       })}
