@@ -1,13 +1,4 @@
-import { Bodoni_Moda } from 'next/font/google'
 import './globals.css'
-
-const display = Bodoni_Moda({
-  subsets: ['latin'],
-  weight: '500',
-  style: 'normal',
-  display: 'swap',
-  variable: '--font-display',
-})
 
 export const metadata = {
   metadataBase: new URL('https://www.jasiahpowers.com'),
@@ -37,15 +28,10 @@ export const viewport = {
 
 export const revalidate = 60
 
-const introScript = `(function(){try{var path=location.pathname;if(path!=='/'&&path!=='')return;if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('jp-intro-seen'))return;document.documentElement.classList.add('intro-pending')}catch(e){}})()`
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={display.variable}>
-      <body>
-        <script dangerouslySetInnerHTML={{ __html: introScript }} />
-        {children}
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   )
 }
