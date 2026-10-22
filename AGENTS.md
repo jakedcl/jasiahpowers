@@ -1,0 +1,26 @@
+# AGENTS.md — jasiahpowers
+
+Portfolio site for Jasiah Powers (photos, prints, projects, video, booking). Content is in Sanity.
+
+## Stack
+- Next.js 14.2 (App Router), React 18.3, JavaScript (no TypeScript), styled-components.
+- Sanity project `k4dm6cys`, dataset `production`. Studio is embedded at `/studio` (`/admin` redirects). Hosted studio name: `jasiahpowers`.
+- Booking: `POST /api/booking` via Resend. `/video` uses the YouTube Data API on the server.
+- Vercel (`vercel.json`: npm install, npm run build).
+
+## Layout
+- `src/app/(site)/` pages: home, `photos/`, `prints/`, `projects/`, `video/`, `contact/`. `src/app/(studio)/` embedded Studio. `src/app/api/booking/`.
+- `src/components/` (`projects/`, `photos/`), `src/lib/` Sanity client and queries.
+- `studio/` standalone Studio with its **own** package.json (Sanity 4). Schema: homePage, photo, project, siteSettings. `photoGallery` and `siteSettings` are singletons.
+- `scripts/migrate-handoff.mjs` one-off content migration. `DEPLOYMENT.md` has the full deploy notes.
+
+## Commands
+- `npm run install-all` (root + studio), `npm run dev` (:3000, Studio at /studio), `npm run build`, `npm run lint`.
+- Standalone Studio: `cd studio && npm run dev`; `npm run deploy` there publishes the hosted Studio.
+
+## Env
+- `RESEND_API_KEY` (without it the form falls back to email), `YOUTUBE_API_KEY` (needed for /video). Optional: `BOOKING_TO_EMAIL`, `BOOKING_FROM_EMAIL`, `YOUTUBE_PLAYLIST_ID`.
+
+## Gotchas
+- Two Sanity installs: the root app uses Sanity 3 / React 18, `studio/` uses Sanity 4. `next.config.mjs` forces root `node_modules` so `/studio` doesn't pull Sanity 4 into the React 18 build. Don't remove that webpack override.
+- `.gitmodules` lists old `jacobdcl/server` and `public_html` submodules that aren't in the tree. Ignore them.
