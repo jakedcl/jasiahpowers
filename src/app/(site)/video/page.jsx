@@ -1,10 +1,9 @@
+import { unstable_cache } from 'next/cache'
 import VideoGrid from '@/components/video/VideoGrid'
 import Reveal from '@/components/motion/Reveal'
 import { sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
 import { DEFAULT_PLAYLIST_ID, playlistId } from '@/lib/site'
-
-export const revalidate = 3600
 
 export const metadata = {
   title: 'Video',
@@ -22,6 +21,31 @@ function isPublic(item) {
   const privacy = item?.status?.privacyStatus
   if (privacy && privacy !== 'public' && privacy !== 'unlisted') return false
   return Boolean(item?.snippet?.resourceId?.videoId)
+}
+
+async function fetchPlaylistItemsUncached(playlist, apiKey) {
+  const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
+  url.searchParams.set('part', 'snippet,status')
+  url.searchParams.set('maxResults', '25')
+  url.searchParams.set('playlistId', playlist)
+  url.searchParams.set('key', apiKey)
+
+  const res = await fetch(url.toString(), { cache: 'no-store' })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    const reason = body?.error?.errors?.[0]?.reason
+    const message = body?.error?.message
+    console.error('YouTube playlistItems request failed', {
+      status: res.status,
+      playlistId: playlist,
+      reason,
+      message,
+    })
+    throw new Error('youtube_playlist_fetch_failed')
+  }
+
+  const data = await res.json()
+  return (data.items || []).filter(isPublic)
 }
 
 async function fetchPlaylistItems() {
@@ -42,20 +66,16 @@ async function fetchPlaylistItems() {
     return { error: 'missing_key', items: [] }
   }
 
-  const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
-  url.searchParams.set('part', 'snippet,status')
-  url.searchParams.set('maxResults', '25')
-  url.searchParams.set('playlistId', playlist)
-  url.searchParams.set('key', apiKey)
-
-  const res = await fetch(url.toString(), { next: { revalidate: 3600 } })
-  if (!res.ok) {
+  try {
+    const items = await unstable_cache(
+      () => fetchPlaylistItemsUncached(playlist, apiKey),
+      ['youtube-playlist-items', playlist],
+      { revalidate: 3600 },
+    )()
+    return { error: null, items }
+  } catch {
     return { error: 'fetch_failed', items: [] }
   }
-
-  const data = await res.json()
-  const items = (data.items || []).filter(isPublic)
-  return { error: null, items }
 }
 
 export default async function VideoPage() {
