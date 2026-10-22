@@ -79,12 +79,19 @@ export function youtubeId(value) {
 export function playlistId(value) {
   const raw = String(value || '').trim()
   if (!raw) return ''
+
   try {
     const list = new URL(raw).searchParams.get('list')
-    if (list && /^[\w-]{8,}$/.test(list)) return list
+    if (list && /^PL[\w-]+$/.test(list)) return list
   } catch {
-    /* a bare id */
+    /* bare id or partial url */
   }
-  if (/^[\w-]{8,}$/.test(raw)) return raw
+
+  const listParam = raw.match(/[?&]list=(PL[\w-]+)/i)
+  if (listParam) return listParam[1]
+
+  const bare = raw.split('&')[0].trim()
+  if (/^PL[\w-]+$/.test(bare)) return bare
+  if (/^[\w-]{8,}$/.test(bare)) return bare
   return ''
 }
