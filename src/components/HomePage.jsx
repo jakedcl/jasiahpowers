@@ -1,5 +1,5 @@
 import HomeIntro from '@/components/HomeIntro'
-import ProjectTiles from '@/components/projects/ProjectTiles'
+import FeaturedReel from '@/components/projects/FeaturedReel'
 
 export default function HomePage({ title, videoId, welcomeMessage, projects }) {
   const message = welcomeMessage?.trim()
@@ -9,12 +9,14 @@ export default function HomePage({ title, videoId, welcomeMessage, projects }) {
       <HomeIntro title={title} />
       <h1 className="visually-hidden">{title}</h1>
       {message ? <p className="welcome">{message}</p> : null}
-      <p className="kicker">Featured work</p>
-      {projects?.length ? (
-        <ProjectTiles projects={projects} priorityFirst />
-      ) : (
-        <p className="detail__empty">No projects yet.</p>
-      )}
+      <section className="reel-section">
+        <p className="kicker">Featured work</p>
+        {projects?.length ? (
+          <FeaturedReel projects={projects} />
+        ) : (
+          <p className="detail__empty">No projects yet.</p>
+        )}
+      </section>
       <section className="home-video">
         <p className="kicker">Video</p>
         <div className="video-frame">

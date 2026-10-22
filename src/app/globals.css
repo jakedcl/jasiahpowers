@@ -322,6 +322,95 @@ html.intro-pending.intro-reveal .site-header {
   white-space: pre-wrap;
 }
 
+.reel-section {
+  width: calc(100% + (2 * var(--gutter)));
+  margin-left: calc(-1 * var(--gutter));
+  margin-top: 28px;
+}
+
+.reel-section .kicker,
+.reel-section .detail__empty {
+  margin-left: var(--gutter);
+  margin-right: var(--gutter);
+}
+
+.reel {
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.reel__track {
+  display: flex;
+  width: max-content;
+  animation: reel-scroll var(--reel-duration, 48s) linear infinite;
+}
+
+.reel:hover .reel__track,
+.reel:focus-within .reel__track,
+.reel:active .reel__track {
+  animation-play-state: paused;
+}
+
+.reel__set {
+  display: flex;
+  gap: 8px;
+  padding-right: 8px;
+}
+
+.reel__card {
+  flex: 0 0 220px;
+  width: 220px;
+}
+
+.reel__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #111 center / cover no-repeat;
+}
+
+.reel__media img {
+  object-fit: cover;
+}
+
+@keyframes reel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 700px) {
+  .reel__card {
+    flex-basis: 300px;
+    width: 300px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .reel__card {
+    flex-basis: 340px;
+    width: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel {
+    overflow-x: auto;
+  }
+
+  .reel__track {
+    animation: none;
+  }
+
+  .reel__set[aria-hidden='true'] {
+    display: none;
+  }
+}
+
 .home-video {
   width: calc(100% + (2 * var(--gutter)));
   margin-left: calc(-1 * var(--gutter));
