@@ -2,11 +2,6 @@
   --paper: #f2f2f0;
   --ink: #111111;
   --gutter: 24px;
-  --font-body: var(--font-grotesk), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: var(--font-switzer), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --type-display-tracking: -0.035em;
-  --type-display-leading: 1;
-  --type-display-weight: 600;
 
   --motion-fast: 150ms;
   --motion-base: 300ms;
@@ -31,6 +26,11 @@
 
 html {
   scrollbar-gutter: stable;
+  --font-body: var(--font-grotesk), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-switzer), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --type-display-tracking: -0.035em;
+  --type-display-leading: 1;
+  --type-display-weight: 600;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -58,21 +58,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-:where(
-  h1,
-  h2,
-  h3,
-  .kicker,
-  .tile__name,
-  .prose h2,
-  .prose h3,
-  .intro__name
-) {
+h1,
+h2,
+h3,
+.kicker,
+.tile__name,
+.prose h2,
+.prose h3 {
   font-family: var(--font-display);
   font-weight: var(--type-display-weight);
+}
+
+.detail h1,
+.plain-page h1:not(.kicker),
+.booking h1,
+.prose h2 {
   letter-spacing: var(--type-display-tracking);
   line-height: var(--type-display-leading);
-  text-transform: lowercase;
 }
 
 h1,
@@ -395,13 +397,24 @@ html.intro-reveal .intro {
   border-radius: 50%;
 }
 
+.intro__lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  transform: scale(3.2);
+  opacity: 1;
+  transition: opacity var(--motion-slow) var(--motion-ease);
+  will-change: opacity;
+}
+
+html.intro-reveal .intro__lockup {
+  opacity: 0;
+}
+
 .intro__name {
   margin: 0;
   max-width: 92vw;
-  font-size: clamp(48px, 12vw, 128px);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
   white-space: nowrap;
 }
 
@@ -1028,6 +1041,11 @@ code {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .intro__lockup {
+    transform: none;
+    transition: none;
   }
 
   .motion-reveal {

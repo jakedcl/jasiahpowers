@@ -1,5 +1,4 @@
 import SiteFrame from '@/components/SiteFrame'
-import { siteFontVariables } from '@/lib/fonts'
 import { urlFor, sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
 
@@ -35,9 +34,9 @@ export async function generateMetadata() {
 
 export default function SiteLayout({ children }) {
   return (
-    <div className={siteFontVariables}>
+    <>
       <script dangerouslySetInnerHTML={{ __html: introScript }} />
       <SiteFrame>{children}</SiteFrame>
-    </div>
+    </>
   )
 }

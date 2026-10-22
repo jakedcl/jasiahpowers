@@ -1,4 +1,5 @@
 import './globals.css'
+import { siteFontVariables } from '@/lib/fonts'
 
 export const metadata = {
   metadataBase: new URL('https://www.jasiahpowers.com'),
@@ -30,7 +31,7 @@ export const revalidate = 60
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={siteFontVariables}>
       <body>{children}</body>
     </html>
   )

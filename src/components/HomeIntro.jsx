@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
-import { MOTION, ms } from '@/lib/motion'
+import { MOTION } from '@/lib/motion'
 
 const SEEN = 'jp-intro-seen'
-const MOVE_MS = MOTION.duration.slow
+const HOLD_MS = 1000
 const REVEAL_MS = MOTION.duration.slow
 let introRun = 0
 
@@ -41,75 +41,39 @@ export default function HomeIntro({ title }) {
     if (!root.classList.contains('intro-pending')) return
 
     const overlay = overlayRef.current
-    const logo = overlay?.querySelector('.intro__logo')
-    const name = overlay?.querySelector('.intro__name')
-    const targetLogo = document.querySelector('.wordmark__mark')
-    const targetName = document.querySelector('.wordmark__text')
-
     let hold
-    let safety
+    let revealEnd
 
     const finish = (fade) => {
       if (finished.current) return
       finished.current = true
       markSeen()
       window.clearTimeout(hold)
-      window.clearTimeout(safety)
-      if (fade) root.classList.add('intro-reveal')
-      else root.classList.remove('intro-pending')
+      window.clearTimeout(revealEnd)
       window.removeEventListener('click', skip)
       window.removeEventListener('wheel', skip)
       window.removeEventListener('touchmove', skip)
       window.removeEventListener('keydown', skip)
-      if (!fade && overlay) overlay.hidden = true
       if (fade) {
-        window.setTimeout(() => {
-          root.classList.remove('intro-pending')
+        root.classList.add('intro-reveal')
+        revealEnd = window.setTimeout(() => {
+          root.classList.remove('intro-pending', 'intro-reveal')
           if (overlay) overlay.hidden = true
         }, REVEAL_MS + 40)
+      } else {
+        root.classList.remove('intro-pending', 'intro-reveal')
+        if (overlay) overlay.hidden = true
       }
     }
 
     const skip = () => finish(false)
 
-    if (
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      !logo ||
-      !name ||
-      !targetLogo ||
-      !targetName
-    ) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       finish(false)
       return
     }
 
-    const play = () => {
-      if (finished.current) return
-      const fromLogo = logo.getBoundingClientRect()
-      const fromName = name.getBoundingClientRect()
-      const toLogo = targetLogo.getBoundingClientRect()
-      const toName = targetName.getBoundingClientRect()
-      if (!fromLogo.width || !fromName.width || !toLogo.width || !toName.width) {
-        finish(false)
-        return
-      }
-
-      const fly = (el, from, to) => {
-        const dx = to.left - from.left
-        const dy = to.top - from.top
-        const scale = to.width / from.width
-        el.style.transformOrigin = 'top left'
-        el.style.transition = `transform ${ms('slow')} ${MOTION.easing.out}`
-        el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`
-      }
-
-      fly(logo, fromLogo, toLogo)
-      fly(name, fromName, toName)
-      name.addEventListener('transitionend', () => finish(true), { once: true })
-      safety = window.setTimeout(() => finish(true), MOVE_MS + 200)
-    }
-
-    hold = window.setTimeout(play, 1000)
+    hold = window.setTimeout(() => finish(true), HOLD_MS)
     window.addEventListener('click', skip)
     window.addEventListener('wheel', skip, { passive: true })
     window.addEventListener('touchmove', skip, { passive: true })
@@ -117,7 +81,7 @@ export default function HomeIntro({ title }) {
 
     return () => {
       window.clearTimeout(hold)
-      window.clearTimeout(safety)
+      window.clearTimeout(revealEnd)
       window.removeEventListener('click', skip)
       window.removeEventListener('wheel', skip)
       window.removeEventListener('touchmove', skip)
@@ -132,16 +96,18 @@ export default function HomeIntro({ title }) {
 
   return (
     <div className="intro" ref={overlayRef} aria-hidden="true">
-      {/* Plain img so the portrait is in the first HTML, before the image optimizer. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="intro__logo"
-        src="/logo-mark.png"
-        alt=""
-        width={640}
-        height={786}
-      />
-      <p className="intro__name">{title}</p>
+      <div className="intro__lockup">
+        {/* Plain img so the portrait is in the first HTML, before the image optimizer. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="intro__logo"
+          src="/logo-mark.png"
+          alt=""
+          width={640}
+          height={786}
+        />
+        <p className="intro__name wordmark__text">{title}</p>
+      </div>
     </div>
   )
 }
