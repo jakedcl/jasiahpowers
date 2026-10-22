@@ -13,7 +13,12 @@ export default function Footer({ social }) {
       <ul>
         {SOCIAL.filter(([key]) => social?.[key]).map(([key, label]) => (
           <li key={key}>
-            <a href={social[key]} target="_blank" rel="noopener noreferrer">
+            <a
+              className="motion-link"
+              href={social[key]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {label}
             </a>
           </li>

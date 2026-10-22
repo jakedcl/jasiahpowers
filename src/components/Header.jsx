@@ -40,13 +40,19 @@ export default function Header({ title, musicLink }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  className="motion-link"
                   aria-current={active ? 'page' : undefined}
                 >
                   {item.label}
                 </Link>
               )
             })}
-            <a href={musicLink} target="_blank" rel="noopener noreferrer">
+            <a
+              className="motion-link"
+              href={musicLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Music
             </a>
           </div>

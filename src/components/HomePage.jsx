@@ -1,5 +1,6 @@
 import HomeIntro from '@/components/HomeIntro'
 import FeaturedReel from '@/components/projects/FeaturedReel'
+import Reveal from '@/components/motion/Reveal'
 
 export default function HomePage({ title, videoId, welcomeMessage, projects }) {
   const message = welcomeMessage?.trim()
@@ -8,16 +9,20 @@ export default function HomePage({ title, videoId, welcomeMessage, projects }) {
     <div className="home">
       <HomeIntro title={title} />
       <h1 className="visually-hidden">{title}</h1>
-      {message ? <p className="welcome">{message}</p> : null}
-      <section className="reel-section">
+      {message ? (
+        <Reveal>
+          <p className="welcome">{message}</p>
+        </Reveal>
+      ) : null}
+      <Reveal as="section" className="reel-section" delay={1}>
         <p className="kicker">Featured work</p>
         {projects?.length ? (
           <FeaturedReel projects={projects} />
         ) : (
           <p className="detail__empty">No projects yet.</p>
         )}
-      </section>
-      <section className="home-video">
+      </Reveal>
+      <Reveal as="section" className="home-video" delay={2}>
         <p className="kicker">Video</p>
         <div className="video-frame">
           <iframe
@@ -28,7 +33,7 @@ export default function HomePage({ title, videoId, welcomeMessage, projects }) {
             allowFullScreen
           />
         </div>
-      </section>
+      </Reveal>
     </div>
   )
 }

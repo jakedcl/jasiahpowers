@@ -1,3 +1,5 @@
+import VideoGrid from '@/components/video/VideoGrid'
+import Reveal from '@/components/motion/Reveal'
 import { sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
 import { DEFAULT_PLAYLIST_ID, playlistId } from '@/lib/site'
@@ -62,8 +64,10 @@ export default async function VideoPage() {
   if (error === 'missing_key') {
     return (
       <div className="plain-page">
-        <h1 className="kicker">Video</h1>
-        <p>Video playlist is not configured.</p>
+        <Reveal>
+          <h1 className="kicker">Video</h1>
+          <p>Video playlist is not configured.</p>
+        </Reveal>
       </div>
     )
   }
@@ -71,8 +75,10 @@ export default async function VideoPage() {
   if (error === 'fetch_failed') {
     return (
       <div className="plain-page">
-        <h1 className="kicker">Video</h1>
-        <p>Could not load videos right now.</p>
+        <Reveal>
+          <h1 className="kicker">Video</h1>
+          <p>Could not load videos right now.</p>
+        </Reveal>
       </div>
     )
   }
@@ -80,32 +86,17 @@ export default async function VideoPage() {
   if (!items.length) {
     return (
       <div className="plain-page">
-        <h1 className="kicker">Video</h1>
-        <p>No public videos in this playlist.</p>
+        <Reveal>
+          <h1 className="kicker">Video</h1>
+          <p>No public videos in this playlist.</p>
+        </Reveal>
       </div>
     )
   }
 
   return (
     <section className="video-page">
-      <h1 className="kicker">Video</h1>
-      <div className="video-grid">
-        {items.map((video, index) => {
-          const videoId = video.snippet.resourceId.videoId
-          const title = video.snippet.title || 'Video'
-          return (
-            <div className="video-frame" key={videoId}>
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}`}
-                title={title}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          )
-        })}
-      </div>
+      <VideoGrid items={items} />
     </section>
   )
 }

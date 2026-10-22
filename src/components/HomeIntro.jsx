@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import { MOTION, ms } from '@/lib/motion'
 
 const SEEN = 'jp-intro-seen'
-const MOVE_MS = 800
+const MOVE_MS = MOTION.duration.slow
+const REVEAL_MS = MOTION.duration.slow
 let introRun = 0
 
 function shouldPlay() {
@@ -64,7 +66,7 @@ export default function HomeIntro({ title }) {
         window.setTimeout(() => {
           root.classList.remove('intro-pending')
           if (overlay) overlay.hidden = true
-        }, 460)
+        }, REVEAL_MS + 40)
       }
     }
 
@@ -97,7 +99,7 @@ export default function HomeIntro({ title }) {
         const dy = to.top - from.top
         const scale = to.width / from.width
         el.style.transformOrigin = 'top left'
-        el.style.transition = `transform ${MOVE_MS}ms ease-out`
+        el.style.transition = `transform ${ms('slow')} ${MOTION.easing.out}`
         el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`
       }
 

@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
+import MotionImage from '@/components/motion/MotionImage'
 import { imageLqip, imageMeta, imageSrc } from '@/lib/image'
 import { parseYoutubeId } from '@/lib/site'
 
@@ -16,14 +16,14 @@ function RichImage({ value }) {
   return (
     <figure>
       <span
-        className="prose__media"
+        className="prose__media motion-media"
         style={
           imageLqip(value)
             ? { backgroundImage: `url(${imageLqip(value)})` }
             : undefined
         }
       >
-        <Image
+        <MotionImage
           src={imageSrc(value, 1400)}
           alt={value.alt || ''}
           width={meta.width}
@@ -60,6 +60,7 @@ const components = {
       const external = /^https?:/i.test(href)
       return (
         <a
+          className="motion-link"
           href={href}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}

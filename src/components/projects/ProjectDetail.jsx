@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import ZoomImage from '@/components/ZoomImage'
 import ProjectText from '@/components/projects/ProjectText'
+import Reveal from '@/components/motion/Reveal'
+import Stagger from '@/components/motion/Stagger'
 import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function ProjectDetail({ project }) {
@@ -11,14 +13,18 @@ export default function ProjectDetail({ project }) {
 
   return (
     <article className="detail">
-      <p className="kicker">
-        <Link href="/projects">Projects</Link>
-      </p>
-      <h1>{project.name}</h1>
-      {summary ? <p className="detail__dek">{summary}</p> : null}
-      <ProjectText value={project.description} />
+      <Reveal>
+        <p className="kicker">
+          <Link className="motion-link" href="/projects">Projects</Link>
+        </p>
+        <h1>{project.name}</h1>
+        {summary ? <p className="detail__dek">{summary}</p> : null}
+      </Reveal>
+      <Reveal delay={1}>
+        <ProjectText value={project.description} />
+      </Reveal>
       {images.length ? (
-        <div className="gallery">
+        <Stagger className="gallery">
           {images.map((image, index) => {
             const meta = imageMeta(image)
             return (
@@ -35,9 +41,11 @@ export default function ProjectDetail({ project }) {
               />
             )
           })}
-        </div>
+        </Stagger>
       ) : (
-        <p className="detail__empty">No images available</p>
+        <Reveal>
+          <p className="detail__empty">No images available</p>
+        </Reveal>
       )}
     </article>
   )

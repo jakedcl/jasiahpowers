@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import MotionImage from '@/components/motion/MotionImage'
+import Stagger from '@/components/motion/Stagger'
 import { gridSizes, imageLqip, imageMeta, imageSrc, projectPath } from '@/lib/image'
 
 export default function ProjectTiles({ projects, priorityFirst = false }) {
   if (!projects?.length) return null
 
   return (
-    <div className="gallery">
+    <Stagger className="gallery">
       {projects.map((project, index) => {
         const image = project.images?.[0]
         const meta = image ? imageMeta(image) : null
@@ -14,10 +15,10 @@ export default function ProjectTiles({ projects, priorityFirst = false }) {
           <Link key={project._id} href={projectPath(project)} className="tile">
             {image ? (
               <span
-                className="tile__media"
+                className="tile__media motion-media"
                 style={{ backgroundImage: `url(${imageLqip(image)})` }}
               >
-                <Image
+                <MotionImage
                   src={imageSrc(image, 1200)}
                   alt={image.alt || ''}
                   width={meta.width}
@@ -39,6 +40,6 @@ export default function ProjectTiles({ projects, priorityFirst = false }) {
           </Link>
         )
       })}
-    </div>
+    </Stagger>
   )
 }

@@ -1,4 +1,6 @@
 import ZoomImage from '@/components/ZoomImage'
+import Reveal from '@/components/motion/Reveal'
+import Stagger from '@/components/motion/Stagger'
 import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function PhotosGallery({ photos, description }) {
@@ -8,17 +10,21 @@ export default function PhotosGallery({ photos, description }) {
   if (!items.length) {
     return (
       <div className="plain-page">
-        <h1 className="kicker">Photos</h1>
-        <p>No photos in the gallery yet.</p>
+        <Reveal>
+          <h1 className="kicker">Photos</h1>
+          <p>No photos in the gallery yet.</p>
+        </Reveal>
       </div>
     )
   }
 
   return (
     <section>
-      <h1 className="kicker">Photos</h1>
-      {intro ? <p className="welcome">{intro}</p> : null}
-      <div className="gallery">
+      <Reveal>
+        <h1 className="kicker">Photos</h1>
+        {intro ? <p className="welcome">{intro}</p> : null}
+      </Reveal>
+      <Stagger className="gallery">
         {items.map((photo, index) => {
           const meta = imageMeta(photo.image)
           const alt = photo.alt || photo.caption || 'Photo'
@@ -37,7 +43,7 @@ export default function PhotosGallery({ photos, description }) {
             />
           )
         })}
-      </div>
+      </Stagger>
     </section>
   )
 }

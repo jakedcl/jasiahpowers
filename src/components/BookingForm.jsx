@@ -154,7 +154,7 @@ export default function BookingForm({ email, types = BOOKING_TYPES }) {
         />
         {fieldErrors.details ? <small>{fieldErrors.details}</small> : null}
       </label>
-      <button className="send" type="submit" disabled={status === 'sending'}>
+      <button className="send motion-press" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending' : 'Send request'}
       </button>
       {status === 'error' ? (

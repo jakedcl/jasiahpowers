@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import MotionImage from '@/components/motion/MotionImage'
 import { imageLqip, imageSrc, projectPath } from '@/lib/image'
 
 function reelDuration(count) {
@@ -22,14 +22,14 @@ function Cards({ projects, copy = false }) {
           >
             {image ? (
               <span
-                className="reel__media"
+                className="reel__media motion-media"
                 style={
                   imageLqip(image)
                     ? { backgroundImage: `url(${imageLqip(image)})` }
                     : undefined
                 }
               >
-                <Image
+                <MotionImage
                   src={imageSrc(image, 800)}
                   alt={image.alt || ''}
                   fill

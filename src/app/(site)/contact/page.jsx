@@ -1,4 +1,5 @@
 import BookingForm from '@/components/BookingForm'
+import Reveal from '@/components/motion/Reveal'
 import { sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
 import { FALLBACK_EMAIL, bookingTypes, contactHref } from '@/lib/site'
@@ -20,13 +21,17 @@ export default async function ContactPage() {
 
   return (
     <div className="booking">
-      <div>
-        <h1>Contact</h1>
-        <p>
-          <a href={contactHref(email)}>{email}</a>
-        </p>
-      </div>
-      <BookingForm email={email} types={bookingTypes(settings)} />
+      <Reveal>
+        <div>
+          <h1>Contact</h1>
+          <p>
+            <a className="motion-link" href={contactHref(email)}>{email}</a>
+          </p>
+        </div>
+      </Reveal>
+      <Reveal delay={1}>
+        <BookingForm email={email} types={bookingTypes(settings)} />
+      </Reveal>
     </div>
   )
 }
