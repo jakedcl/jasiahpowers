@@ -1,7 +1,6 @@
 import ZoomImage from '@/components/ZoomImage'
 import Reveal from '@/components/motion/Reveal'
-import Stagger from '@/components/motion/Stagger'
-import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
+import { imageLqip, imageMeta, imageSrc, mosaicSizes } from '@/lib/image'
 
 export default function PhotosGallery({ photos, description }) {
   const intro = description?.trim()
@@ -19,31 +18,32 @@ export default function PhotosGallery({ photos, description }) {
   }
 
   return (
-    <section>
+    <section className="photos-page">
       <Reveal>
         <h1 className="kicker">Photos</h1>
         {intro ? <p className="welcome">{intro}</p> : null}
       </Reveal>
-      <Stagger className="gallery">
+      <div className="photos-mosaic">
         {items.map((photo, index) => {
           const meta = imageMeta(photo.image)
           const alt = photo.alt || photo.caption || 'Photo'
           return (
-            <ZoomImage
-              key={photo._key || index}
-              src={imageSrc(photo.image, 1400)}
-              fullSrc={imageSrc(photo.image, 2000)}
-              lqip={imageLqip(photo.image)}
-              alt={alt}
-              caption={photo.caption || ''}
-              width={meta.width}
-              height={meta.height}
-              sizes={gridSizes}
-              priority={index === 0}
-            />
+            <Reveal key={photo._key || index} className="photos-mosaic__item">
+              <ZoomImage
+                src={imageSrc(photo.image, 960)}
+                fullSrc={imageSrc(photo.image, 2000)}
+                lqip={imageLqip(photo.image)}
+                alt={alt}
+                caption={photo.caption || ''}
+                width={meta.width}
+                height={meta.height}
+                sizes={mosaicSizes}
+                priority={index < 6}
+              />
+            </Reveal>
           )
         })}
-      </Stagger>
+      </div>
     </section>
   )
 }

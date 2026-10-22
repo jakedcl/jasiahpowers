@@ -679,6 +679,59 @@ html.intro-pending.intro-reveal .site-header {
   page-break-inside: avoid;
 }
 
+.photos-mosaic {
+  column-count: 3;
+  column-gap: 6px;
+  width: calc(100% + (2 * var(--gutter)));
+  margin-top: 20px;
+  margin-left: calc(-1 * var(--gutter));
+  margin-right: calc(-1 * var(--gutter));
+}
+
+.photos-mosaic__item {
+  display: block;
+  width: 100%;
+  margin: 0 0 6px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.photos-mosaic .zoom__frame {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #e8e4dc;
+}
+
+.photos-mosaic .zoom img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .photos-mosaic {
+    column-count: 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .photos-mosaic {
+    column-count: 5;
+  }
+}
+
+@media (min-width: 1440px) {
+  .photos-mosaic {
+    column-count: 6;
+    column-gap: 8px;
+  }
+
+  .photos-mosaic__item {
+    margin-bottom: 8px;
+  }
+}
+
 .tile {
   position: relative;
   display: flex;

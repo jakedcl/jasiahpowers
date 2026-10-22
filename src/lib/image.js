@@ -12,6 +12,9 @@ export function imageMeta(image) {
 export const gridSizes =
   '(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw'
 
+export const mosaicSizes =
+  '(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 18vw'
+
 export function imageSrc(image, width) {
   return urlFor(image).width(width).fit('max').auto('format').quality(75).url()
 }
