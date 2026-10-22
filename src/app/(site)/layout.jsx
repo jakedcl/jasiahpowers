@@ -1,15 +1,7 @@
-import { Bodoni_Moda } from 'next/font/google'
 import SiteFrame from '@/components/SiteFrame'
+import { siteFontVariables } from '@/lib/fonts'
 import { urlFor, sanityFetch } from '@/lib/sanity'
 import { siteSettingsQuery } from '@/lib/queries'
-
-const display = Bodoni_Moda({
-  subsets: ['latin'],
-  weight: '500',
-  style: 'normal',
-  display: 'swap',
-  variable: '--font-display',
-})
 
 const introScript = `(function(){try{var path=location.pathname;if(path!=='/'&&path!=='')return;if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('jp-intro-seen'))return;document.documentElement.classList.add('intro-pending')}catch(e){}})()`
 
@@ -43,7 +35,7 @@ export async function generateMetadata() {
 
 export default function SiteLayout({ children }) {
   return (
-    <div className={display.variable}>
+    <div className={siteFontVariables}>
       <script dangerouslySetInnerHTML={{ __html: introScript }} />
       <SiteFrame>{children}</SiteFrame>
     </div>

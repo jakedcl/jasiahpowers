@@ -2,8 +2,11 @@
   --paper: #f2f2f0;
   --ink: #111111;
   --gutter: 24px;
-  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --display: var(--font-display), Didot, "Bodoni MT", "Times New Roman", serif;
+  --font-body: var(--font-grotesk), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-switzer), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --type-display-tracking: -0.035em;
+  --type-display-leading: 1;
+  --type-display-weight: 600;
 
   --motion-fast: 150ms;
   --motion-base: 300ms;
@@ -47,11 +50,29 @@ body {
   background-image: url(/grain.png);
   background-repeat: repeat;
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--font-body);
   font-size: 16px;
+  font-weight: 400;
   line-height: 1.45;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+:where(
+  h1,
+  h2,
+  h3,
+  .kicker,
+  .tile__name,
+  .prose h2,
+  .prose h3,
+  .intro__name
+) {
+  font-family: var(--font-display);
+  font-weight: var(--type-display-weight);
+  letter-spacing: var(--type-display-tracking);
+  line-height: var(--type-display-leading);
+  text-transform: lowercase;
 }
 
 h1,
@@ -180,12 +201,11 @@ button {
 }
 
 .site-nav a {
-  font-family: var(--display);
+  font-family: var(--font-body);
   font-size: 22px;
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 .motion-link {
@@ -318,22 +338,16 @@ button {
 
 .site-footer a,
 .site-footer p {
-  font-family: var(--display);
+  font-family: var(--font-body);
   font-size: 17px;
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 .kicker {
   margin: 36px 0 0;
-  font-family: var(--display);
   font-size: 20px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  text-transform: none;
 }
 
 .visually-hidden {
@@ -384,11 +398,10 @@ html.intro-reveal .intro {
 .intro__name {
   margin: 0;
   max-width: 92vw;
-  font-family: var(--sans);
   font-size: clamp(48px, 12vw, 128px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
   white-space: nowrap;
 }
 
@@ -559,8 +572,8 @@ html.intro-pending.intro-reveal .site-header {
   max-width: 16em;
   margin-top: 12px;
   font-size: clamp(40px, 6.5vw, 76px);
-  font-weight: 500;
-  letter-spacing: -0.045em;
+  font-weight: 700;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
@@ -583,19 +596,12 @@ html.intro-pending.intro-reveal .site-header {
 }
 
 .prose h2 {
-  font-family: var(--display);
   font-size: clamp(32px, 4vw, 48px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1;
   margin-top: 1.3em;
 }
 
 .prose h3 {
-  font-family: var(--display);
   font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
   line-height: 1.05;
   margin-top: 1.2em;
 }
@@ -697,11 +703,8 @@ html.intro-pending.intro-reveal .site-header {
 }
 
 .tile__name {
-  font-family: var(--display);
   font-size: clamp(20px, 2vw, 28px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  font-weight: 600;
 }
 
 .tile__bio {
@@ -722,11 +725,10 @@ html.intro-pending.intro-reveal .site-header {
 
 .plain-page h1:not(.kicker) {
   margin-top: 10px;
-  font-family: var(--display);
   font-size: clamp(48px, 8vw, 80px);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
 }
 
 .plain-page p {
@@ -770,11 +772,10 @@ code {
 }
 
 .booking h1 {
-  font-family: var(--display);
   font-size: clamp(56px, 8vw, 96px);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.04em;
-  line-height: 0.85;
+  line-height: 0.95;
 }
 
 .booking p a:not(.motion-link) {
@@ -820,12 +821,11 @@ code {
   border-radius: 0;
   background: transparent;
   color: var(--ink);
-  font-family: var(--display);
-  font-size: 28px;
+  font-family: var(--font-body);
+  font-size: 17px;
   font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -976,12 +976,11 @@ code {
   border-radius: 0;
   background: transparent;
   color: var(--paper);
-  font-family: var(--display);
-  font-size: 24px;
+  font-family: var(--font-body);
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   cursor: pointer;
 }
 
@@ -1118,6 +1117,5 @@ code {
 
   .site-nav a {
     font-size: 18px;
-    letter-spacing: -0.02em;
   }
 }
