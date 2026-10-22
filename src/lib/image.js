@@ -1,5 +1,14 @@
 import { urlFor } from '@/lib/sanity'
 
+export const DEFAULT_IMAGE_ALT = 'Photo by Jasiah Powers'
+
+export function imageAlt(alt, fallback = DEFAULT_IMAGE_ALT) {
+  const text = String(alt ?? '').trim()
+  if (text) return text
+  const fb = String(fallback ?? '').trim()
+  return fb || DEFAULT_IMAGE_ALT
+}
+
 export function imageMeta(image) {
   const ref = image?.asset?._ref || ''
   const match = ref.match(/-(\d+)x(\d+)-/)

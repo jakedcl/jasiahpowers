@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import MotionImage from '@/components/motion/MotionImage'
-import { imageLqip, imageSrc, projectPath } from '@/lib/image'
+import { imageAlt, imageLqip, imageSrc, projectPath } from '@/lib/image'
 
 function reelDuration(count) {
   if (count <= 3) return 40
@@ -31,7 +31,7 @@ function Cards({ projects, copy = false }) {
               >
                 <MotionImage
                   src={imageSrc(image, 800)}
-                  alt={image.alt || ''}
+                  alt={imageAlt(image.alt, project.name)}
                   fill
                   sizes="(max-width: 699px) 220px, 340px"
                   loading="lazy"

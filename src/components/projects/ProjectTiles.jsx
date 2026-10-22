@@ -1,7 +1,14 @@
 import Link from 'next/link'
 import MotionImage from '@/components/motion/MotionImage'
 import Stagger from '@/components/motion/Stagger'
-import { gridSizes, imageLqip, imageMeta, imageSrc, projectPath } from '@/lib/image'
+import {
+  gridSizes,
+  imageAlt,
+  imageLqip,
+  imageMeta,
+  imageSrc,
+  projectPath,
+} from '@/lib/image'
 
 export default function ProjectTiles({ projects, priorityFirst = false }) {
   if (!projects?.length) return null
@@ -20,7 +27,7 @@ export default function ProjectTiles({ projects, priorityFirst = false }) {
               >
                 <MotionImage
                   src={imageSrc(image, 1200)}
-                  alt={image.alt || ''}
+                  alt={imageAlt(image.alt, project.name)}
                   width={meta.width}
                   height={meta.height}
                   sizes={gridSizes}

@@ -3,7 +3,7 @@ import ZoomImage from '@/components/ZoomImage'
 import ProjectText from '@/components/projects/ProjectText'
 import Reveal from '@/components/motion/Reveal'
 import Stagger from '@/components/motion/Stagger'
-import { gridSizes, imageLqip, imageMeta, imageSrc } from '@/lib/image'
+import { gridSizes, imageAlt, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 
 export default function ProjectDetail({ project }) {
   if (!project) return null
@@ -33,7 +33,7 @@ export default function ProjectDetail({ project }) {
                 src={imageSrc(image, 1400)}
                 fullSrc={imageSrc(image, 2000)}
                 lqip={imageLqip(image)}
-                alt={image.alt || `Preview of ${project.name}`}
+                alt={imageAlt(image.alt, project.name)}
                 width={meta.width}
                 height={meta.height}
                 sizes={gridSizes}

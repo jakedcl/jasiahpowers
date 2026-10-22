@@ -1,6 +1,6 @@
 import { PortableText } from '@portabletext/react'
 import MotionImage from '@/components/motion/MotionImage'
-import { imageLqip, imageMeta, imageSrc } from '@/lib/image'
+import { imageAlt, imageLqip, imageMeta, imageSrc } from '@/lib/image'
 import { parseYoutubeId } from '@/lib/site'
 
 function paragraphs(text) {
@@ -25,7 +25,7 @@ function RichImage({ value }) {
       >
         <MotionImage
           src={imageSrc(value, 1400)}
-          alt={value.alt || ''}
+          alt={imageAlt(value.alt)}
           width={meta.width}
           height={meta.height}
           sizes="(max-width: 720px) 100vw, 640px"

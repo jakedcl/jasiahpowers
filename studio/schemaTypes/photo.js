@@ -33,9 +33,7 @@ export default defineType({
               title: 'Alt text',
               type: 'string',
               description:
-                'A few plain words describing the photo. Screen readers read this, and it shows if the picture is slow to load.',
-              validation: (Rule) =>
-                Rule.required().error('Add a few words describing this photo.'),
+                'Optional. A few plain words describing the photo for screen readers.',
             }),
             defineField({
               name: 'caption',

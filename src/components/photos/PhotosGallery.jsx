@@ -1,6 +1,13 @@
 import ZoomImage from '@/components/ZoomImage'
 import Reveal from '@/components/motion/Reveal'
-import { imageLqip, imageMeta, imageSrc, mosaicSizes } from '@/lib/image'
+import {
+  DEFAULT_IMAGE_ALT,
+  imageAlt,
+  imageLqip,
+  imageMeta,
+  imageSrc,
+  mosaicSizes,
+} from '@/lib/image'
 
 export default function PhotosGallery({ photos, description }) {
   const intro = description?.trim()
@@ -26,7 +33,7 @@ export default function PhotosGallery({ photos, description }) {
       <div className="photos-mosaic">
         {items.map((photo, index) => {
           const meta = imageMeta(photo.image)
-          const alt = photo.alt || photo.caption || 'Photo'
+          const alt = imageAlt(photo.alt, photo.caption || DEFAULT_IMAGE_ALT)
           return (
             <Reveal key={photo._key || index} className="photos-mosaic__item">
               <ZoomImage

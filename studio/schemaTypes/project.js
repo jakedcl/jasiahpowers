@@ -85,9 +85,8 @@ export default defineType({
               name: 'alt',
               title: 'Alt text',
               type: 'string',
-              description: 'A few words describing the picture, for people who cannot see it.',
-              validation: (Rule) =>
-                Rule.required().error('Add a short description of this picture.'),
+              description:
+                'Optional. A few words describing the picture for people who cannot see it.',
             }),
             defineField({
               name: 'caption',
@@ -136,9 +135,8 @@ export default defineType({
               name: 'alt',
               title: 'Alt text',
               type: 'string',
-              description: 'A few words describing the picture, for people who cannot see it.',
-              validation: (Rule) =>
-                Rule.required().error('Add a short description of this picture.'),
+              description:
+                'Optional. A few words describing the picture for people who cannot see it.',
             }),
           ],
         }),
