@@ -4,6 +4,7 @@ export const MOTION = {
     fast: 150,
     base: 300,
     slow: 600,
+    intro: 800,
   },
   easing: {
     out: 'cubic-bezier(0.22, 1, 0.36, 1)',

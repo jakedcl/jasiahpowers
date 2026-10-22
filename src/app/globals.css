@@ -372,9 +372,9 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  padding: 24px;
+  padding: max(16px, env(safe-area-inset-top)) 24px 24px;
   pointer-events: auto;
+  background: #f4efe6;
 }
 
 html.intro-pending .intro {
@@ -389,32 +389,29 @@ html.intro-reveal .intro {
   pointer-events: none;
 }
 
-.intro__logo {
-  display: block;
-  width: min(46vw, 280px);
-  height: min(46vw, 280px);
-  object-fit: cover;
-  border-radius: 50%;
-}
-
 .intro__lockup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
-  transform: scale(3.2);
-  opacity: 1;
-  transition: opacity var(--motion-slow) var(--motion-ease);
-  will-change: opacity;
+  gap: 10px;
 }
 
-html.intro-reveal .intro__lockup {
-  opacity: 0;
+.intro__logo {
+  display: block;
+  width: clamp(120px, 22vmin, 200px);
+  height: clamp(120px, 22vmin, 200px);
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .intro__name {
   margin: 0;
   max-width: 92vw;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
   white-space: nowrap;
 }
 
@@ -434,12 +431,15 @@ html.intro-pending .site-header {
   border-bottom-color: transparent;
 }
 
-html.intro-pending.intro-reveal .wordmark,
 html.intro-pending.intro-reveal .site-nav,
 html.intro-pending.intro-reveal .site-footer,
 html.intro-pending.intro-reveal .home > :not(.intro) {
   opacity: 1;
   transition: opacity var(--motion-slow) var(--motion-ease);
+}
+
+html.intro-pending.intro-reveal .wordmark {
+  opacity: 0;
 }
 
 html.intro-pending.intro-reveal .site-header {
@@ -1041,11 +1041,6 @@ code {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .intro__lockup {
-    transform: none;
-    transition: none;
   }
 
   .motion-reveal {
