@@ -4,17 +4,14 @@ import { useEffect, useRef, useState } from 'react'
 
 export function useInViewOnce({ rootMargin = '0px 0px -8% 0px', threshold = 0.08 } = {}) {
   const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(
+    () => typeof IntersectionObserver === 'undefined',
+  )
 
   useEffect(() => {
     if (visible) return
     const node = ref.current
     if (!node) return
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setVisible(true)
-      return
-    }
 
     const observer = new IntersectionObserver(
       (entries) => {

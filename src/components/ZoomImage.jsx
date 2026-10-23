@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import MotionImage from '@/components/motion/MotionImage'
 
@@ -18,11 +18,11 @@ export default function ZoomImage({
   const dialogRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState('closed')
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
 
   const requestClose = useCallback(() => {
     const dialog = dialogRef.current

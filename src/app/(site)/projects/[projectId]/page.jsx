@@ -6,7 +6,8 @@ import { plainText } from '@/lib/text'
 
 export const revalidate = 60
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const project = await sanityFetch(projectBySlugQuery, {
     slug: params.projectId,
   })
@@ -18,7 +19,8 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function ProjectPage({ params }) {
+export default async function ProjectPage(props) {
+  const params = await props.params;
   const { projectId } = params
   const project = await sanityFetch(projectBySlugQuery, { slug: projectId })
 
