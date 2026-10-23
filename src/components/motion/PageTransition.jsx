@@ -8,11 +8,17 @@ export default function PageTransition({ children }) {
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
-    setVisible(false)
+    let inner
     const frame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setVisible(true))
+      setVisible(false)
+      inner = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setVisible(true))
+      })
     })
-    return () => cancelAnimationFrame(frame)
+    return () => {
+      cancelAnimationFrame(frame)
+      if (inner) cancelAnimationFrame(inner)
+    }
   }, [pathname])
 
   return (
