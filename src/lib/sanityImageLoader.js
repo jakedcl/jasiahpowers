@@ -1,6 +1,6 @@
-// Custom next/image loader. Sanity's CDN resizes images for free, so we hand
-// each requested width straight to cdn.sanity.io instead of letting Vercel's
-// Image Optimization transform (and bill) every size.
+// Per-image next/image loader for Sanity URLs. Applied on MotionImage (and
+// similar) only — Sanity's CDN resizes for free; local /public assets keep
+// Vercel's default image optimization.
 export default function sanityImageLoader({ src, width, quality }) {
   if (!src.startsWith('https://cdn.sanity.io/')) {
     // Local files in /public are served as-is.

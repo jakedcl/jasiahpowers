@@ -42,9 +42,6 @@ const nextConfig = {
         pathname: '/images/**',
       },
     ],
-    // Sanity's CDN does the resizing; Vercel does zero image transformations.
-    loader: 'custom',
-    loaderFile: './src/lib/sanityImageLoader.js',
   },
 }
 
