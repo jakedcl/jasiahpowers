@@ -2,6 +2,10 @@
 
 Portfolio site for Jasiah Powers (photos, prints, projects, video, booking). Content is in Sanity.
 
+## Dev framework
+
+This repo follows Jake's dev framework: [jakedcl/dev-framework](https://github.com/jakedcl/dev-framework) (start at its `AGENTS.md`). The framework is the source of truth; if anything in this file conflicts with it, the framework wins.
+
 ## Stack
 - Next.js 14.2 (App Router), React 18.3, JavaScript (no TypeScript), styled-components.
 - Sanity project `k4dm6cys`, dataset `production`. Studio is embedded at `/studio` (`/admin` redirects). Hosted studio name: `jasiahpowers`.
